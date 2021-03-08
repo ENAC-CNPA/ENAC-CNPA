@@ -1,0 +1,6 @@
+<template class="atv-tool-panel atv-tool-slice ${atv.toolsService.currentToolName === 'slice' ? 'atv-tool-panel--active':''}">
+  <require from="./atv-tool-panel.css"></require>
+  <ux-button type="text" click.delegate="atv.slice.setPlane('X')"><ux-icon icon="border_vertical"></ux-icon></ux-button>
+  <ux-button type="text" click.delegate="atv.slice.setPlane('Y')"><ux-icon icon="border_horizontal"></ux-icon></ux-button>
+  <ux-button type="text" click.delegate="clearSlicing()"><ux-icon icon="clear"></ux-icon></ux-button>
+</template>

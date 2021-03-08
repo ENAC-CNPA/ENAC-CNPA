@@ -1,0 +1,292 @@
+<template>
+  <require from="./viewer.css"></require>
+  <section if.bind="!siteId">
+    <p t="three.This page is loaded without a siteId"></p>
+  </section>
+  <section if.bind="siteId && !site">
+    <p t="three.Loading Site"></p>
+  </section>
+  <div style="position: absolute;bottom: 16px;left: 16px;z-index:4000" if.bind="terrainObj && originalGeometry">
+    <ux-button click.delegate="backToPosition()">Back to position</ux-button>
+    <br><ux-button click.delegate="applyMatrix()">Apply Matrix</ux-button>
+    <br><ux-input value.bind="axisX" label="Axis X" change.trigger="applyRotMatrix()"></ux-input>
+    <br><ux-input value.bind="axisY" label="Axis Y" change.trigger="applyRotMatrix()"></ux-input>
+    <br><ux-input value.bind="axisZ" label="Axis Z" change.trigger="applyRotMatrix()"></ux-input>
+    <br><ux-input value.bind="angle" label="Angle" change.trigger="applyRotMatrix()"></ux-input>
+  </div>
+  <template if.bind="siteId && site">
+    <div class="three-viewer">
+      <three-cube-view three.bind="three" if.bind="three.camera"></three-cube-view>
+      <three class="three-viewer__element" view-model.ref="three"></three>
+      <div class="three-viewer__operation" if.bind="operation">${operation}</div>
+      <div class="three-viewer__toolbar" if.bind="!operation">
+        <div class="three-viewer__toolbar-item" click.delegate="toggleSearch()">
+          <ux-icon icon="search"></ux-icon>
+        </div>
+        <div class="three-viewer__toolbar-item" click.delegate="home()">
+          <ux-icon icon="home"></ux-icon>
+        </div>
+        <div class="three-viewer__toolbar-item" click.delegate="toggleThemes()" if.bind="themes && themes.length">
+          <ux-icon icon="style"></ux-icon>
+        </div>
+        <div class="three-viewer__toolbar-item" click.delegate="toggleFilters()">
+          <ux-icon icon="filter_list"></ux-icon>
+        </div>
+        <div class="three-viewer__toolbar-item" click.delegate="toggleBcf()" if.bind="bcfProject">
+          <ux-icon icon="playlist_add_check"></ux-icon>
+        </div>
+        <div class="three-viewer__toolbar-item" click.delegate="toggleZoneSelector()">
+          <ux-icon icon="folder_open"></ux-icon>
+        </div>
+        <div class="three-viewer__toolbar-item" click.delegate="toggleSlicingTool()" css="color: ${toolsService.currentToolName === 'slice' ? 'red':''}">
+          <ux-icon icon="content_cut"></ux-icon>
+        </div>
+        <div class="three-viewer__toolbar-item" click.delegate="toggleMeasuringTool()" css="color: ${toolsService.currentToolName === 'measure' ? 'red':''}">
+          <ux-icon icon="straighten"></ux-icon>
+        </div>
+      </div>
+      <div class="three-viewer__search" if.bind="searchOpened">
+        <ux-input variant="outline" value.bind="q">
+          <ux-icon icon="clear" slot="trailing-icon" click.delegate="clearSearch()" style="z-index: 1;"></ux-icon>
+        </ux-input>
+      </div>
+      <ux-card class="three-viewer__themes" if.bind="themesOpened && themes && themes.length">
+        <ux-card-header>
+          <div class="ux-card__title" t="three.Select a theme"></div>
+        </ux-card-header>
+        <div class="ux-card__separator" style="margin:0;"></div>
+        <div>
+          <ux-list class="ux-list--border">
+            <ux-list-item class="click" repeat.for="theme of themes" click.delegate="selectTheme(theme)">
+              <div class="ux-list-item__content">
+                ${theme.name}
+              </div>
+              <div class="ux-list-item__action-item">
+                <ux-icon icon="check_box" if.bind="$parent.selectedTheme === theme"></ux-icon>
+                <ux-icon icon="check_box_outline_blank" else></ux-icon>
+              </div>
+            </ux-list-item>
+          </ux-list>
+        </div>
+      </ux-card>
+      <ux-card class="three-viewer__filters" if.bind="filtersOpened">
+        <ux-card-header>
+          <div class="ux-card__title flex-justify-around" style="flex-direction: row;">
+            <span t="three.Filter objects"></span>
+            <ux-icon icon="delete" click.delegate="clearAllFilters()"></ux-icon>
+          </div>
+        </ux-card-header>
+        <div class="ux-card__separator" style="margin:0;"></div>
+        <div>
+          <div class="three-rule-conditions">
+            <div class="three-viewer__filter-condition-line" repeat.for="condition of filters">
+              <div class="three-viewer__filter-condition-line-key">
+                <ux-input variant="outline"type="text" value.bind="condition.key" change.delegate="applyFilters()" label="${'three.Key' | t}">
+                  
+                  <ux-icon icon="list" click.delegate="conditionKeyHelpList(condition)" slot="trailing-icon" style="z-index:1"></ux-icon>
+                </ux-input>
+              </div>
+              <div class="three-viewer__filter-condition-line-type ux-button__group">
+                <ux-button type="${condition.type === '<' ? 'raised':'outline'}" size="small" click.delegate="setConditionType(condition, '<')" ignore-dico>&lt;</ux-button>
+                <ux-button type="${condition.type === '*' ? 'raised':'outline'}" size="small" click.delegate="setConditionType(condition, '*')" ignore-dico>*</ux-button>
+                <ux-button type="${condition.type === '=' ? 'raised':'outline'}" size="small" click.delegate="setConditionType(condition, '=')" ignore-dico>=</ux-button>
+                <ux-button type="${condition.type === '!=' ? 'raised':'outline'}" size="small" click.delegate="setConditionType(condition, '!=')" ignore-dico>!=</ux-button>
+                <ux-button type="${condition.type === '>' ? 'raised':'outline'}" size="small" click.delegate="setConditionType(condition, '>')" ignore-dico>&gt;</ux-button>
+              </div>
+              <div class="three-viewer__filter-condition-line-value">
+                <ux-input variant="outline"type="text" value.bind="condition.value" change.delegate="applyFilters()" label="${'three.Value' | t}">
+                  
+                  <ux-icon icon="list" click.delegate="conditionValueHelpList(condition)" slot="trailing-icon" style="z-index:1"></ux-icon>
+                </ux-input>
+              </div>
+              <span class="three-viewer__filter__remove-button" click.delegate="removeConditionFilter($index)" t="three.Remove Condition"></span>
+              <div class="ux-card__separator"></div>
+            </div>
+            <div class="three-viewer__filter__add-button" click.delegate="addConditionFilter()">
+              <ux-icon icon="add"></ux-icon> <span t="three.Add Condition Filter"></span>
+            </div>
+          </div>
+        </div>
+      </ux-card>
+      <ux-card class="three-viewer__bcf" if.bind="bcfOpened">
+        <ux-card-header>
+          <template if.bind="bcfView === 'topics-list'">
+            <div class="ux-card__title">${bcfProject.name}</div>
+            <div class="ux-card__sub-title" t="bcf.BCF Topics"></div>
+          </template>
+          <template if.bind="bcfView === 'new-topic'">
+            <div class="ux-card__title">${bcfProject.name}</div>
+            <div class="ux-card__sub-title" t="bcf.Create a new topic"></div>
+          </template>
+          <template if.bind="bcfView === 'topic'">
+            <div class="ux-card__title" style="flex-direction: row;"><ux-icon icon="chevron_left" click.delegate="backToBcfList()"></ux-icon> ${bcfTopic.title}</div>
+            <div class="ux-card__sub-title" if.bind="bcfTopic.description">${bcfTopic.description}</div>
+            <div class="ux-card__sub-title" else><span class="muted" t="bcf.No description"></span></div>
+          </template>
+          <template if.bind="bcfView === 'edit-topic'">
+            <div class="ux-card__title">${bcfTopic.title}</div>
+            <div class="ux-card__sub-title" t="bcf.Edit Topic"></div>
+          </template>
+        </ux-card-header>
+        <div class="ux-card__separator" style="margin:0;"></div>
+        <div class="bcf-topic__content" ref="scrollContainer">
+          <bcf-topics if.bind="bcfView === 'topics-list'"
+            topic.delegate="openTopic($event)"
+            project-id.bind="bcfProject.project_id"></bcf-topics>
+          <bcf-new-topic-form if.bind="bcfView === 'new-topic'" 
+            project-id.bind="bcfProject.project_id" 
+            topic-instance.bind="bcfNewTopicInstance" 
+            comment-instance.bind="bcfNewCommentInstance"></bcf-new-topic-form>
+          <bcf-topic if.bind="bcfView === 'topic' && !bcfEditComment"
+            viewpoint.delegate="highlightViewpoint($event)"
+            edit-comment.delegate="editComment($event)"
+            hide-title.bind="true"
+            project-id.bind="bcfProject.project_id"
+            topic-id.bind="bcfTopic.guid"></bcf-topic>
+          <div if.bind="bcfView === 'topic' && (bcfAddComment || bcfEditComment)">
+            <bcf-comment-form project-id.bind="bcfProject.project_id" 
+              topic-id.bind="bcfTopic.guid" 
+              comment-id.bind="bcfNewCommentInstance.guid"
+              instance.bind="bcfNewCommentInstance"></bcf-comment-form>
+            <ux-list>
+              <ux-list-item>
+                <div class="ux-list-item__detail ux-list-item__avatar">
+                  <img style="width: 100px;" src.bind="bcfViewpointInstance.snapshot.snapshot_data" if.bind="bcfViewpointInstance.snapshot.snapshot_data">
+                </div>
+                <div class="ux-list-item__content" t="bcf.Include Viewpoint in Comment"></div>
+                <div class="ux-list-item__action-item"><ux-switch checked.bind="saveBcfViewpointWithComment"></ux-switch></div>
+              </ux-list-item>
+            </ux-list>
+            
+            <ux-list class="ux-list--border" if.bind="saveBcfViewpointWithComment && bcfViewpointInstance && bcfViewpointInstance.components">
+              <ux-list-item repeat.for="component of bcfViewpointInstance.components.selection">
+                <div class="ux-list-item__content">IFC: ${component.ifc_guid}</div>
+                <div class="ux-list-item__action-item"><ux-icon icon="clear" click.delegate="removeIfcFromViewpoint(component.ifc_guid)"></ux-icon></div>
+              </ux-list-item>
+            </ux-list>
+            
+            <p class="muted" 
+              style="margin: 16px;" 
+              if.bind="saveBcfViewpointWithComment && !bcfViewpointInstance.components.selection.length">
+              <span t="bcf.Add objects to your Viewpoint by selecting them in the viewer"></span>
+            </p>
+          </div>
+          <bcf-topic-form if.bind="bcfView === 'edit-topic'"
+            project-id.bind="bcfProject.project_id"
+            topic-id.bind="bcfTopic.guid"
+            instance.bind="bcfTopic"></bcf-topic-form>
+        </div>
+        <div class="ux-card__separator" style="margin:0;"></div>
+        <div class="ux-card-footer ux-card__action-row">
+          <template if.bind="bcfView === 'topics-list'">
+            <ux-button type="text" click.delegate="exportBcf()"><span t="bcf.Export BCF"></span></ux-button>
+            <ux-button type="raised" style="margin-left: auto" click.delegate="startNewBcfTopic()"><span t="bcf.New Topic"></span></ux-button>
+          </template>
+          <template if.bind="bcfView === 'new-topic'">
+            <ux-button type="text" click.delegate="cancelNewBcfTopic()"><span t="Cancel"></span></ux-button>
+            <ux-button type="raised" style="margin-left: auto" click.delegate="saveNewBcfTopic()"><span t="Save"></span></ux-button>
+          </template>
+          <template if.bind="bcfView === 'topic' && !(bcfAddComment || bcfEditComment)">
+            <ux-button type="text" click.delegate="startEditTopic()"><span t="bcf.Edit Topic"></span></ux-button>
+            <ux-button type="raised" style="margin-left: auto" click.delegate="addComment()"><span t="bcf.New Comment"></span></ux-button>
+          </template>
+          <template if.bind="bcfView === 'topic' && (bcfAddComment || bcfEditComment)">
+            <ux-button type="text" click.delegate="cancelNewBcfComment()"><span t="Cancel"></span></ux-button>
+            <ux-button type="raised" style="margin-left: auto" click.delegate="saveNewBcfComment()"><span t="Save"></span></ux-button>
+          </template>
+          <template if.bind="bcfView === 'edit-topic'">
+            <ux-button type="text" click.delegate="cancelEditTopic()"><span t="Cancel"></span></ux-button>
+            <ux-button type="raised" style="margin-left: auto" click.delegate="saveEditedTopic()"><span t="Save"></span></ux-button>
+          </template>
+        </div>
+      </ux-card>
+      <ux-card class="three-viewer__zone-selector" if.bind="zoneSelectorOpened">
+        <ux-card-header>
+          <div class="ux-card__title" t="three.Zone selector"></div>
+        </ux-card-header>
+        <div class="ux-card__separator" style="margin:0;"></div>
+        <ux-card-content>
+          <ux-form>
+            <div class="ux-form__row" if.bind="hasUnclassified.includes('')">
+              <ux-checkbox checked.bind="selectedUnclassified" model="" change.delegate="applyFilters() & debounce:10"></ux-checkbox>
+              <label t="three.ifc.Unclassified"></label>
+            </div>
+            <template repeat.for="building of site.buildings">
+              <div class="ux-form__row" click.trigger="toggleBuilding(building.id)">
+                <ux-checkbox checked.to-view="selectedBuildings.indexOf(building.id) !== -1" indeterminate.to-view="indeterminateBuildings.indexOf(building.id) !== -1"></ux-checkbox>
+                <label if.bind="building.name">${building.name}</label>
+                <label else t="three.ifc.Unnamed building"></label>
+              </div>
+              <div class="ux-form__sub-row">
+                <div class="ux-form__row" if.bind="hasUnclassified.includes(building.id)">
+                  <ux-checkbox checked.bind="selectedUnclassified" model.bind="building.id" change.delegate="applyFilters() & debounce:10"></ux-checkbox>
+                  <label t="three.ifc.Unclassified"></label>
+                </div>
+                <template repeat.for="storey of site.storeys | filterBuilding:building">
+                  <div class="ux-form__row" click.trigger="toggleStorey(storey.id)">
+                    <ux-checkbox checked.to-view="selectedStoreys.indexOf(storey.id) !== -1" indeterminate.to-view="indeterminateStoreys.indexOf(storey.id) !== -1"></ux-checkbox>
+                    <label if.bind="storey.name">${storey.name}</label>
+                    <label else t="three.ifc.Unnamed storey"></label>
+                  </div>
+                  <div class="ux-form__sub-row">
+                    <template if.bind="displaySpacesForStoreys[storey.id]">
+                      <span class="click pf" click.delegate="toggleDisplaySpacesForStorey(storey.id)" t="three.Hide Spaces"></span>
+                      <div class="ux-form__row" if.bind="hasUnclassified.includes(storey.id)">
+                        <ux-checkbox checked.bind="selectedUnclassified" model.bind="storey.id" change.delegate="applyFilters() & debounce:10"></ux-checkbox>
+                        <label t="three.ifc.Unclassified"></label>
+                      </div>
+                      <template repeat.for="space of site.spaces | filterStorey:storey">
+                        <div class="ux-form__row">
+                          <ux-checkbox checked.bind="selectedSpaces" model.bind="space.id" change.delegate="applyFilters() & debounce:10"></ux-checkbox>
+                          <label if.bind="space.name">${space.name}</label>
+                          <label else t="three.ifc.Unnamed space"></label>
+                        </div>
+                      </template>
+                    </template>
+                    <template if.bind="!displaySpacesForStoreys[storey.id]">
+                      <span class="click pf" click.delegate="toggleDisplaySpacesForStorey(storey.id)" t="three.Show Spaces"></span>
+                    </template>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </ux-form>
+        </ux-card-content>
+      </ux-card>
+      <ux-card class="three-viewer__slicing-tool" if.bind="sliceToolOpened && toolsService.currentToolName === 'slice'">
+        <ux-card-content>
+          <ux-button type="text" click.delegate="slice.setPlane('X')"><ux-icon icon="border_vertical"></ux-icon></ux-button>
+          <ux-button type="text" click.delegate="slice.setPlane('Y')"><ux-icon icon="border_horizontal"></ux-icon></ux-button>
+          <ux-button type="text" click.delegate="clearSlicing()"><ux-icon icon="clear"></ux-icon></ux-button>
+        </ux-card-content>
+      </ux-card>
+      <ux-card class="three-viewer__measuring-tool" if.bind="toolsService.currentToolName === 'measure'">
+        <ux-card-content>
+          <ux-button type="text" click.delegate="measure.setType('distance')"><ux-icon icon="signal_cellular_null" css="color: ${measure.type === 'distance' ? 'red':''};"></ux-icon></ux-button>
+          <ux-button type="text" click.delegate="measure.setType('horizontal')"><ux-icon icon="space_bar" css="color: ${measure.type === 'horizontal' ? 'red':''};"></ux-icon></ux-button>
+          <ux-button type="text" click.delegate="measure.clearMeasuring()" if.bind="measure.isMeasuring"><ux-icon icon="clear"></ux-icon></ux-button>
+          <ux-button type="text" click.delegate="measure.endMeasuring()" if.bind="measure.isMeasuring && measure.type === 'surface'"><ux-icon icon="check"></ux-icon></ux-button>
+          <ux-button type="text" click.delegate="measure.clearMeasures()" if.bind="measure.measures.length"><ux-icon icon="delete"></ux-icon></ux-button>
+        </ux-card-content>
+      </ux-card>
+      <ux-card class="three-viewer__property-explorer" if.bind="select.objects.length">
+        <ux-card-header style="flex-direction: row; justify-content: space-between;">
+          <div class="ux-card__title">
+            <ux-select value.bind="selectedObject">
+              <ux-option repeat.for="object of select.objects" value.bind="object">${object.name || object.uuid}</ux-option>
+            </ux-select>
+          </div>
+          <ux-icon style="margin-left: auto;" icon="${explorerOpened ? 'keyboard_arrow_down':'keyboard_arrow_up'}" click.delegate="explorerOpened = !explorerOpened" class="click"></ux-icon>
+          <ux-icon icon="clear" click.delegate="select.none()" class="click"></ux-icon>
+        </ux-card-header>
+        <template if.bind="explorerOpened">
+          <div class="ux-card__separator" style="margin:0;"></div>
+          <ux-card-content>
+            <ux-button type="text" click.delegate="filterOutObject(selectedObject)"><span t="three.Filter out this object"></span></ux-button>
+            <three-object-property-explorer object.bind="selectedObject" properties.bind="propertiesExplorerCallback"></three-object-property-explorer>
+          </ux-card-content>
+        </template>
+      </ux-card>
+    </div>
+  </template>
+</template>

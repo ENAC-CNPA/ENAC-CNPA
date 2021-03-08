@@ -1,0 +1,19 @@
+.atv-toolbar-panel-search-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  padding: 0 8px;
+}
+.atv-toolbar-panel-search-input > input{
+  width: 100%;
+  padding: 5px;
+  border: none;
+  outline: none;
+}
+.atv-toolbar-panel-search-filters .atv-toolbar-panel-separator {
+  margin: 16px 0;
+}
+.atv-toolbar-panel-search-filter {
+  padding: 8px;
+}

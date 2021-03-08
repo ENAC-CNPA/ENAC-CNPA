@@ -1,0 +1,6 @@
+<template
+  class="atv-toolbar-button ${active || panel.active ? 'atv-toolbar-button--active':''} ${opened || panel.opened ? 'atv-toolbar-button--opened':''}"
+  click.delegate="togglePanel()">
+  <require from="./atv-toolbar.css"></require>
+  <ux-icon icon="${icon}"></ux-icon>
+</template>

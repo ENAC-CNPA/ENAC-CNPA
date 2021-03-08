@@ -1,0 +1,196 @@
+/* Styles for page Viewer */
+.three-viewer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.three-viewer__element {
+  width: 100%;
+  height: 100%;
+}
+.three-viewer__operation {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  padding: 5px;
+  font-size: 0.7rem;
+  background: rgba(0, 0, 0, 0.3);
+  color: rgb(200, 200, 200);
+  border-radius: 3px;
+}
+.three-viewer__toolbar {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.three-viewer__toolbar-item {
+  background: white;
+  color: black;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.three-viewer__themes,
+.three-viewer__search,
+.three-viewer__filters,
+.three-viewer__bcf,
+.three-viewer__zone-selector,
+.three-viewer__slicing-tool,
+.three-viewer__measuring-tool {
+  position: absolute;
+  top: 16px;
+  left: 64px;
+  font-size: 0.7rem;
+  --aurelia-ux--card-background: rgba(255, 255, 255, 0.8);
+  --aurelia-ux--card-foreground: rgb(30, 30, 30);
+}
+.three-viewer__zone-selector .ux-card__content {
+  overflow-y: auto;
+  max-height: 50vh;
+}
+.three-viewer__slicing-tool,
+.three-viewer__measuring-tool {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  --aurelia-ux--card-background: rgba(255, 255, 255, 0.8);
+  --aurelia-ux--card-foreground: rgb(30, 30, 30);
+}
+.three-viewer__slicing-tool > ux-card-content,
+.three-viewer__measuring-tool > ux-card-content {
+  padding: 0!important;
+}
+.three-viewer__slicing-tool > ux-card-content ux-button > button,
+.three-viewer__measuring-tool > ux-card-content ux-button > button {
+  min-width: 40px;
+}
+.three-viewer .ux-input {
+  /* height: 44px;
+  --aurelia-ux--input-border-active-width: 1px;
+  --aurelia-ux--input-font-size: 16px; */
+}
+.three-viewer .ux-input,
+.three-viewer .ux-select,
+.three-viewer .ux-textarea {
+  font-size: 16px;
+}
+
+.three-viewer__filter-condition-line {
+  padding: 0 8px;
+}
+.three-viewer__filter-condition-line:first-of-type {
+  padding-top: 8px;
+}
+.three-viewer__filter-condition-line-key,
+.three-viewer__filter-condition-line-type,
+.three-viewer__filter-condition-line-value {
+  margin: 8px 0;
+}
+.three-viewer__filter-condition-line-key ux-input,
+.three-viewer__filter-condition-line-value ux-input {
+  /* height: 40px; */
+}
+.three-viewer__filter-condition-line-type .ux-button--raised,
+.three-viewer__filter-condition-line-type .ux-button--outline {
+  min-width: auto;
+}
+.three-viewer__filter__remove-button {
+  font-size: 12px;
+  padding: 8px;
+  color: var(--ux-swatch--grey-p800);
+  cursor: pointer;
+}
+
+.three-viewer__filter__add-button {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.ux-button__group {
+  display: flex;
+  justify-content: center;
+}
+.ux-button__group > ux-button {
+  margin-right: -1px;
+}
+.ux-button__group > ux-button:last-of-type {
+  margin-right: 0;
+}
+.ux-button__group > ux-button:first-of-type > button {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.ux-button__group > ux-button:last-of-type > button {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.three-viewer__bcf {
+  min-width: 300px;
+  font-size: 16px;
+  font-size: 1rem;
+}
+
+/** for MD screens **/
+@media (min-width: 960px) {
+  .three-viewer__bcf {
+    min-width: 500px;
+  }
+}
+
+.bcf-topic__content {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.bcf-object-picker {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: white;
+  border-radius: 5px;
+  padding: 16px;
+}
+.bcf-object-picker .ux-list {
+  max-height: 25vh;
+  overflow-y: auto;
+}
+.bcf-viewpoint-highlight-clearer {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: white;
+  border-radius: 5px;
+  padding: 16px;
+}
+
+/* temporarily */
+.ux-card__header {
+  flex-direction: column;
+}
+
+
+.three-viewer__property-explorer {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  font-size: 0.7rem;
+  --aurelia-ux--card-background: rgba(255, 255, 255, 0.8);
+  --aurelia-ux--card-foreground: rgb(30, 30, 30);
+  min-width: 300px;
+  max-width: 600px;
+}
+.three-viewer__property-explorer .ux-card__content {
+  max-height: 200px;
+  overflow: auto;
+}

@@ -1,0 +1,49 @@
+<template class="atv-toolbar-panel-zone">
+  <require from="../atv-toolbar.css"></require>
+  <!-- <require from="./atv-toolbar-panel-zone-selector.css"></require> -->
+  <ux-form style="padding: 8px;">
+    <div class="ux-form__row" if.bind="atv.siteService.hasUnclassified.includes('')">
+      <ux-checkbox checked.bind="atv.siteService.selectedUnclassified" model="" change.delegate="atv.siteServcie.applyFilters() & debounce:10"></ux-checkbox>
+      <label t="three.ifc.Unclassified"></label>
+    </div>
+    <template repeat.for="building of atv.siteService.site.buildings">
+      <div class="ux-form__row" click.trigger="atv.siteService.toggleBuilding(building.id)">
+        <ux-checkbox checked.to-view="atv.siteService.selectedBuildings.indexOf(building.id) !== -1" indeterminate.to-view="atv.siteService.indeterminateBuildings.indexOf(building.id) !== -1"></ux-checkbox>
+        <label if.bind="building.name">${building.name}</label>
+        <label else t="three.ifc.Unnamed building"></label>
+      </div>
+      <div class="ux-form__sub-row">
+        <div class="ux-form__row" if.bind="atv.siteService.hasUnclassified.includes(building.id)">
+          <ux-checkbox checked.bind="atv.siteService.selectedUnclassified" model.bind="building.id" change.delegate="atv.siteService.applyFilters() & debounce:10"></ux-checkbox>
+          <label t="three.ifc.Unclassified"></label>
+        </div>
+        <template repeat.for="storey of atv.siteService.site.storeys | atvFilterBuilding:building">
+          <div class="ux-form__row" click.trigger="atv.siteService.toggleStorey(storey.id)">
+            <ux-checkbox checked.to-view="atv.siteService.selectedStoreys.indexOf(storey.id) !== -1" indeterminate.to-view="atv.siteService.indeterminateStoreys.indexOf(storey.id) !== -1"></ux-checkbox>
+            <label if.bind="storey.name">${storey.name}</label>
+            <label else t="three.ifc.Unnamed storey"></label>
+          </div>
+          <div class="ux-form__sub-row">
+            <template if.bind="atv.siteService.displaySpacesForStoreys[storey.id]">
+              <span class="click pf" click.delegate="atv.siteService.toggleDisplaySpacesForStorey(storey.id)" t="three.Hide Spaces"></span>
+              <div class="ux-form__row" if.bind="atv.siteService.hasUnclassified.includes(storey.id)">
+                <ux-checkbox checked.bind="atv.siteService.selectedUnclassified" model.bind="storey.id" change.delegate="atv.siteService.applyFilters() & debounce:10"></ux-checkbox>
+                <label t="three.ifc.Unclassified"></label>
+              </div>
+              <template repeat.for="space of atv.siteService.site.spaces | atvFilterStorey:storey">
+                <div class="ux-form__row">
+                  <ux-checkbox checked.bind="atv.siteService.selectedSpaces" model.bind="space.id" change.delegate="atv.siteService.applyFilters() & debounce:10"></ux-checkbox>
+                  <label if.bind="space.name">${space.name}</label>
+                  <label else t="three.ifc.Unnamed space"></label>
+                </div>
+              </template>
+            </template>
+            <template if.bind="!atv.siteService.displaySpacesForStoreys[storey.id]">
+              <span class="click pf" click.delegate="atv.siteService.toggleDisplaySpacesForStorey(storey.id)" t="three.Show Spaces"></span>
+            </template>
+          </div>
+        </template>
+      </div>
+    </template>
+  </ux-form>
+</template>

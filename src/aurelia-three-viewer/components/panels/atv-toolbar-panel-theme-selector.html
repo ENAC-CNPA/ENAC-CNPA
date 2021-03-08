@@ -1,0 +1,60 @@
+<template class="atv-toolbar-panel-theme">
+  <require from="../../atv.css"></require>
+  <require from="../atv-toolbar.css"></require>
+  <require from="./atv-toolbar-panel-theme-selector.css"></require>
+  <div class="atv-panel-head">
+    <template if.bind="!selectedTheme">
+      <ux-icon icon="style"></ux-icon>
+      <span t="three.Themes"></span>
+    </template>
+    <template if.bind="selectedTheme && selectedRuleIndex === null">
+      <ux-icon icon="chevron_left" class="click" click.delegate="backToThemes()"></ux-icon>
+      <span>${selectedTheme.name}</span>
+      <ux-icon icon="edit" class="click" click.delegate="editTheme(selectedTheme)"></ux-icon>
+    </template>
+    <template if.bind="selectedTheme && selectedRuleIndex !== null">
+      <ux-icon icon="chevron_left" class="click" click.delegate="backToSelectedTheme()"></ux-icon>
+      <span>${selectedTheme.rules[selectedRuleIndex].name}</span>
+    </template>
+  </div>
+
+  <atv-toolbar-panel-separator></atv-toolbar-panel-separator>
+  <div class="atv-panel-content">
+    <ux-list if.bind="!selectedTheme">
+      <ux-list-item repeat.for="theme of atv.siteService.themes" class="click" click.delegate="selectTheme(theme)">
+        <ux-icon icon="style" class="ux-list-item__detail"></ux-icon>
+        <div class="ux-list-item__content">${theme.name}</div>
+        <ux-icon icon="check_box" if.bind="$parent.atv.siteService.selectedTheme.id === theme.id" click.delegate="toggleTheme(theme, $event)"></ux-icon>
+        <ux-icon icon="check_box_outline_blank" else click.delegate="toggleTheme(theme, $event)"></ux-icon>
+      </ux-list-item>
+    </ux-list>
+    <ux-button type="text" if.bind="!selectedTheme && atv.global.state.swissdata.authenticated" click.delegate="createNewTheme()">
+      <ux-icon icon="add"></ux-icon>
+      <span t="three.Add Theme"></span>
+    </ux-button>
+    <div class="atv-toolbar-theme-selector__theme-editor" if.bind="selectedTheme && selectedRuleIndex === null">
+      <p t="three.Rules"></p>
+      <ux-list>
+        <ux-list-item click.delegate="selectRule($index)" class="click" repeat.for="rule of selectedTheme.rules">
+          <ux-icon icon="reorder" class="ux-list-item__detail"></ux-icon>
+          <div class="ux-list-item__content">
+            ${rule.name}
+          </div>
+          <ux-icon icon="chevron_right"></ux-icon>
+        </ux-list-item>
+      </ux-list>
+      
+      <ux-button type="text" click.delegate="createNewRule(selectedTheme)">
+        <ux-icon icon="add"></ux-icon>
+        <span t="three.Add Rule"></span>
+      </ux-button>
+    </div>
+    <div class="atv-toolbar-theme-selector__rule-editor" if.bind="selectedTheme && selectedRuleIndex !== null">
+      <atv-theme-rule-editor rule-index.bind="selectedRuleIndex" theme.bind="selectedTheme" reselect-theme.delegate="reselectTheme()" rule-removed.delegate="ruleRemoved($event)" rule-updated.delegate="updateTheme()" styles-changed.delegate="updateTheme()"></atv-theme-rule-editor>
+    </div>
+  </div>
+
+
+  
+  
+</template>

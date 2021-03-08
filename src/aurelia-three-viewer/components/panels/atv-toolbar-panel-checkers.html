@@ -1,0 +1,98 @@
+<template class="atv-toolbar-panel-search">
+  <require from="../../atv.css"></require>
+  <require from="../atv-toolbar.css"></require>
+  <require from="./atv-toolbar-panel-checkers.css"></require>
+  <div class="atv-panel-head">
+    <template if.bind="!selectedReport">
+      <ux-icon icon="check"></ux-icon>
+      <span t="three.Checkers"></span>
+    </template>
+    <template if.bind="selectedReport">
+      <ux-icon icon="chevron_left" class="click" click.delegate="backToReports()"></ux-icon>
+      <span>${selectedReport.name}</span>
+      <ux-icon icon="edit" class="click" click.delegate="editReport(selectedReport)"></ux-icon>
+    </template>
+  </div>
+  <atv-toolbar-panel-separator></atv-toolbar-panel-separator>
+  <div class="atv-panel-content">
+    <ux-list if.bind="!selectedReport">
+      <ux-list-item class="click" click.delegate="selectReport(report)" repeat.for="report of reports">
+        <ux-icon class="ux-list-item__detail" icon="library_books"></ux-icon>
+        <div class="ux-list-item__content">${report.name}</div>
+        <!-- <ux-icon icon="file_download" class="ux-list-item__action-item click" click.delegate="runReport($event, report.id, true)"></ux-icon> -->
+      </ux-list-item>
+    </ux-list>
+    <ux-list if.bind="selectedReport && !reportDisplayRun">
+
+      <p t="three.Included Flows"></p>
+      <p class="muted" if.bind="!includedFlowsInSelectedReport.length" t="three.Create a new flow or add one from the list below"></p>
+      <ux-list class="ux-list--border" if.bind="includedFlowsInSelectedReport.length">
+        <ux-list-item reorderable-repeat.for="flow of includedFlowsInSelectedReport" reorderable-dnd-handler-selector=".ux-list-item__detail" reorderable-after-reordering="flowOrderChanged" click.delegate="editFlow(flow)">
+          <div class="ux-list-item__detail">
+            <ux-icon icon="drag_handle"></ux-icon>
+          </div>
+          <div class="ux-list-item__content">${flow.name}</div>
+          <div class="ux-list-item__action-item">
+            <ux-icon icon="clear" click.delegate="removeFlow($index, $event)"></ux-icon>
+          </div>
+        </ux-list-item>
+      </ux-list>
+
+      <p t="three.Run Report"></p>
+      <ux-button type="text" click.delegate="runReport($event, selectedReport.id)"><span t="three.Interactive"></span></ux-button>
+      <ux-button type="text" click.delegate="runPdfReport($event, selectedReport.id)"><span t="Download"></span></ux-button>
+
+      <template if.bind="availableFlowsForSelectedReport.length > 0">
+        <p>&nbsp;</p>
+        <p t="three.Add a flow"></p>
+        <div class="atv-toolbar-panel-checkers-search-input">
+          <ux-icon icon="search"></ux-icon>
+          <input value.bind="searchFlow" placeholder="${'three.Search Flow' | t}">
+          <ux-icon icon="clear" if.bind="searchFlow" click.delegate="searchFlow = ''"></ux-icon>
+        </div>
+        <ux-list class="ux-list--border" style="max-height: 200px;overflow-y:auto;">
+          <ux-list-item repeat.for="flow of availableFlowsForSelectedReport | filterFlow:searchFlow">
+            <div class="ux-list-item__detail">
+              <ux-icon icon="check"></ux-icon>
+            </div>
+            <div class="ux-list-item__content">${flow.name}</div>
+            <div class="ux-list-item__action-item">
+              <ux-icon icon="add" click.delegate="addFlow(flow)"></ux-icon>
+            </div>
+          </ux-list-item>
+        </ux-list>
+      </template>
+    </ux-list>
+    <ux-list if.bind="selectedReport && reportDisplayRun">
+      <ux-list-item if.bind="reportRunInProgress">
+        <ar-spinner class="ux-list-item__detail"></ar-spinner>
+        <div class="ux-list-item__content" t="three.Run in progress"></div>
+      </ux-list-item>
+      <template if.bind="!reportRunInProgress && reportRunOutput.flows">
+        <template repeat.for="outputFlow of reportRunOutput.flows">
+          <ux-list-item class="output-flow-head">
+            <div class="ux-list-item__content">${outputFlow.name}</div>
+          </ux-list-item>
+          <template repeat.for="output of outputFlow.outputs">
+            <ux-list-item class="output-flow-output-head" if.bind="output.name">
+              <div class="ux-list-item__content">${output.name}</div>
+            </ux-list-item>
+            <ux-list-item class="output-flow-output-item" repeat.for="o of output.outputs">
+              <div class="ux-list-item__content">
+                <atv-toolbar-panel-checker-output output.bind="o"></atv-toolbar-panel-checker-output>
+              </div>
+            </ux-list-item>
+          </template>
+        </template>
+      </template> 
+    </ux-list>
+    <ux-button type="text" if.bind="!selectedReport" click.delegate="createNewReport()">
+      <ux-icon icon="add"></ux-icon>
+      <span t="three.Create a new Report"></span>
+    </ux-button>
+    <ux-button type="text" if.bind="selectedReport" click.delegate="createNewFlow()">
+      <ux-icon icon="add"></ux-icon>
+      <span t="three.Create a new Flow"></span>
+    </ux-button>
+  </div>
+</template>

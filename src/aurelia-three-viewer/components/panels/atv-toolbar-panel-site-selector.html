@@ -1,0 +1,88 @@
+<template class="atv-toolbar-panel-site">
+  <require from="../atv-toolbar.css"></require>
+  <require from="./atv-toolbar-panel-site-selector.css"></require>
+
+  <div class="atv-panel-head">
+    <template if.bind="!adminSite">
+      <ux-icon icon="location_on"></ux-icon>
+      <span t="three.Sites"></span>
+      <ux-button if.bind="atv.global.state.swissdata.authenticated" click.delegate="atv.router.navigateToRoute('account')" type="text">
+        <ux-icon style="margin-right: 8px;" icon="person" if.bind="!atv.global.state.swissdata.profile.picture"></ux-icon>
+        <img style="margin-right: 8px;" src="${atv.global.swissdataApi.http.baseUrl}/profile/${atv.global.state.swissdata.profile.id}?download=picture&apiKey=${atv.global.state.swissdata.publicKey}" class="circle" if.bind="atv.global.state.swissdata.profile.picture" width="20" height="20">
+        ${atv.global.state.swissdata.user.firstname} ${atv.global.state.swissdata.user.lastname}
+      </ux-button>
+      <ux-button if.bind="!atv.global.state.swissdata.authenticated" click.delegate="atv.router.navigateToRoute('login')" type="text">S'identifier</ux-button>
+    </template>
+    <template if.bind="adminSite">
+      <ux-icon icon="chevron_left" class="click" click.delegate="backToSites()"></ux-icon>
+      <span>${adminSite.name}</span>
+    </template>
+  </div>
+
+  <atv-toolbar-panel-separator></atv-toolbar-panel-separator>
+  <div class="atv-panel-content">
+    <template if.bind="!adminSite">
+      <ux-list>
+        <ux-list-item 
+          repeat.for="site of atv.siteService.sites" 
+          class="click ${atv.siteService.site.id === site.id ? 'atv-toolbar-panel-site--selected':''}" 
+          click.delegate="selectSite(site.id)">
+          <ux-icon icon="location_on" class="ux-list-item__detail"></ux-icon>
+          <div class="ux-list-item__content">${site.name}</div>
+          <ux-icon icon="settings" class="ux-list-item__action-item" click.delegate="selectSiteForAdmin(site, $event)" if.bind="atv.global.state.swissdata.authenticated"></ux-icon>
+        </ux-list-item>
+      </ux-list>
+
+      <ux-button type="text" if.bind="!selectedTheme && atv.global.state.swissdata.authenticated" click.delegate="createNewSite()">
+        <ux-icon icon="add"></ux-icon>
+        <span t="three.Add Site"></span>
+      </ux-button>
+    </template>
+
+    <div if.bind="adminSite">
+
+      <p>Site Settings</p>
+
+      <ux-field>
+        <ux-input value.bind="adminSite.name" label="${'three.Site Name' | t}" blur.trigger="saveSiteName()"></ux-input>
+      </ux-field>
+
+      <ux-list>
+        <ux-list-item click.delegate="importSettings()" class="click">
+          <ux-icon icon="import_export" class="ux-list-item__detail"></ux-icon>
+          <div class="ux-list-item__content" t="Import"></div>
+          <ux-icon icon="chevron_right" class="ux-list-item__action-item"></ux-icon>
+        </ux-list-item>
+        <ux-list-item click.delegate="exportSettings()" class="click">
+          <ux-icon icon="import_export" class="ux-list-item__detail"></ux-icon>
+          <div class="ux-list-item__content" t="Export"></div>
+          <ux-icon icon="chevron_right" class="ux-list-item__action-item"></ux-icon>
+        </ux-list-item>
+      </ux-list>
+
+      <p>Site Data</p>
+
+      <ux-list if.bind="!uploadingFile">
+        <ux-list-item click.delegate="uploadDataFromFile()" class="click">
+          <ux-icon icon="cloud_upload" class="ux-list-item__detail"></ux-icon>
+          <div class="ux-list-item__content" t="three.Upload Data From File"></div>
+          <ux-icon icon="chevron_right" class="ux-list-item__action-item"></ux-icon>
+        </ux-list-item>
+        <ux-list-item click.delegate="clearSiteData()" class="click">
+          <ux-icon icon="delete" class="ux-list-item__detail"></ux-icon>
+          <div class="ux-list-item__content" t="three.Delete Data"></div>
+          <ux-icon icon="chevron_right" class="ux-list-item__action-item"></ux-icon>
+        </ux-list-item>
+      </ux-list>
+
+      <p if.bind="uploadingFile">
+        <span t="three.Upload in progress"></span>
+        <br>
+        <ar-spinner-line active.bind="true"></ar-spinner-line>
+      </p>
+
+      <ux-button click.delegate="deleteSite()" type="text" style="margin-right: auto; --aurelia-ux--button-background: var(--aurelia-ux--design-error);"><span t="three.Delete Site"></span></ux-button>
+
+    </div>
+  </div>
+</template>

@@ -1,0 +1,19 @@
+.atv-tool-panel {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px;
+  border-radius: 4px;
+  background: white;
+  border: #ccc;
+  display: none;
+}
+.atv-tool-panel--active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.atv-tool-panel button{
+  min-width: 40px;
+}

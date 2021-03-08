@@ -1,0 +1,18 @@
+.requesting-indicator {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+}
+
+
+/* Fix for Safari-mobile in gettingStarted.Email */
+body, button, input, optgroup, select, textarea {
+  -webkit-overflow-scrolling: auto !important;
+  }
+/* Fix for Old Getting-started module */
+getting-started .ux-button--raised,getting-started .ux-button--flat,getting-started .ux-button--fab {
+    background-color: var(--aurelia-ux--design-primary-dark) !important;
+}

@@ -1,0 +1,22 @@
+<template>
+  <require from="./admin.css"></require>
+  <div class="abs-full flex-center" if.bind="!global.state.swissdata.authenticated">
+    <getting-started if.bind="!global.state.swissdata.authenticated" class="au-animate animate-fade dark" locales-filter.bind="['fr_CH','de_CH', 'it_CH']">
+      <ux-button type="text" slot="footer"><span t="Help"></span></ux-button>
+      <ux-button type="text" slot="footer"><span t="Privacy"></span></ux-button>
+      <ux-button type="text" slot="footer"><span t="Terms"></span></ux-button>
+    </getting-started>
+  </div>
+  <template else>
+    <template if.bind="hasAccess">
+      <three-admin-element initial-site-id.bind="initialSiteId">
+        <ux-button slot="main-buttons" type="text" click.delegate="global.navigateToRoute('account')"><span t="profile.My Account"></span></ux-button>
+        <ux-button slot="main-buttons" type="text" click.delegate="global.logout()"><span ="Logout"></span></ux-button>
+      </three-admin-element>
+    </template>
+    <section else>
+      <p t="profile.Your account do not have the right to open admin"></p>
+      <p><ux-button click.delegate="global.logout()"><span t="Logout"></span></ux-button></p>
+    </section>
+  </template>
+</template>

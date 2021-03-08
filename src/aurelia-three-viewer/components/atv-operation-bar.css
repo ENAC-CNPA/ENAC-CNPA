@@ -1,0 +1,19 @@
+.atv-operation-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 18px;
+  background: var(--aurelia-ux--design-primary);
+  /*background: rgba(255, 50, 50, 0.6);*/
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+}
+
+.atv-operation-bar--visible {
+  display: block;
+}

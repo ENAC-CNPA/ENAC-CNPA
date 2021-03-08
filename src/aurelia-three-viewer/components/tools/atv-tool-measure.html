@@ -1,0 +1,11 @@
+<template class="atv-tool-panel atv-tool-measure ${atv.toolsService.currentToolName === 'measure' ? 'atv-tool-panel--active':''}">
+  <require from="./atv-tool-panel.css"></require>
+  <ux-button type="text" click.delegate="atv.measure.setType('distance')"><ux-icon icon="signal_cellular_null" css="color: ${atv.measure.type === 'distance' ? 'red':''};"></ux-icon></ux-button>
+  <ux-button type="text" click.delegate="atv.measure.setType('horizontal')"><ux-icon icon="space_bar" css="color: ${atv.measure.type === 'horizontal' ? 'red':''};"></ux-icon></ux-button>
+  <ux-button type="text" click.delegate="atv.measure.setType('surface')"><ux-icon icon="format_shapes" css="color: ${atv.measure.type === 'surface' ? 'red':''};"></ux-icon></ux-button>
+  <ux-button type="text" click.delegate="atv.measure.setType('volume')"><ux-icon icon="cube" css="color: ${atv.measure.type === 'volume' ? 'red':''};"></ux-icon></ux-button>
+  <ux-button type="text" click.delegate="atv.measure.clearMeasuring()" if.bind="atv.measure.isMeasuring"><ux-icon icon="clear"></ux-icon></ux-button>
+  <ux-button type="text" click.delegate="atv.measure.endMeasuring()" if.bind="atv.measure.isMeasuring && atv.measure.type === 'surface' && atv.measure.currentMeasure.value"><ux-icon icon="check"></ux-icon></ux-button>
+  <ux-button type="text" click.delegate="atv.measure.volumeNextStep()" if.bind="atv.measure.isMeasuring && atv.measure.type === 'volume' && atv.measure.currentMeasure.value"><ux-icon icon="check"></ux-icon></ux-button>
+  <ux-button type="text" click.delegate="atv.measure.clearMeasures()" if.bind="atv.measure.measures.length"><ux-icon icon="delete"></ux-icon></ux-button>
+</template>

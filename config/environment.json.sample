@@ -1,0 +1,17 @@
+{
+  "debug": true,
+  "testing": true,
+  "swissdata": {
+    "host": "http://localhost:3000",
+    "apiKey": "enterYourKey",
+    "translationMemoryApiKey": "enterYourKey",
+    "translationMemoryHost": "http://localhost:3000"
+  },
+  "stripe": {
+    "apiKey": ""
+  },
+  "ipstack": {
+    "apiKey": ""
+  },
+  "clientUrl": "http://localhost:8082"
+}

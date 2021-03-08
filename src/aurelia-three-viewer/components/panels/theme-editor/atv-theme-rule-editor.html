@@ -1,0 +1,93 @@
+<template class="atv-theme-rule-editor ">
+  <require from="./atv-theme-rule-editor.css"></require>
+  <p><strong t="three.Context"></strong></p>
+  <p class="small muted" t="three.Coming soon, Will be linked with site context and here you will be able to select from the available site contexts"></p>
+  <atv-toolbar-panel-separator></atv-toolbar-panel-separator>
+  <p><strong t="three.Conditions"></strong></p>
+  <p class="small muted" t="three.The rule will apply when all the following conditions are met"></p>
+  <div class="atv-theme-rule-editor__conditions">
+    <template repeat.for="condition of rule.conditions">
+      <div class="atv-theme-rule-editor__condition">
+        <ux-input value.bind="condition.key" variant="outline" label="${'three.Key' | t}" dense.bind="true" change.delegate="notifyModification()">
+          <ux-icon icon="list" slot="leading-icon" style="z-index: 1" click.delegate="atv.siteService.keyHelperList(condition)"></ux-icon>
+        </ux-input>
+        <ux-chip-list ux-choice-container.bind="condition.type" click.delegate="notifyModification()">
+          <ux-chip ux-choice="<" ignore-dico>&lt;</ux-chip>
+          <ux-chip ux-choice="*" ignore-dico>*</ux-chip>
+          <ux-chip ux-choice="=" ignore-dico>=</ux-chip>
+          <ux-chip ux-choice="!=" ignore-dico>!=</ux-chip>
+          <ux-chip ux-choice=">" ignore-dico>&gt;</ux-chip>
+        </ux-chip-list>
+        <ux-input value.bind="condition.value" variant="outline" label="${'three.Value' | t}" dense.bind="true" change.delegate="notifyModification()">
+          <ux-icon icon="list" slot="leading-icon" style="z-index: 1" click.delegate="atv.siteService.valueHelperList(condition.key, condition)"></ux-icon>
+        </ux-input>
+        <ux-button type="text" size="small" click.delegate="removeConditionFromRule($index)" style="transform: scale(0.8) translateX(-10px)">
+          <span t="three.Remove Condition"></span>
+        </ux-button>
+      </div>
+      <atv-toolbar-panel-separator if.bind="!$last"></atv-toolbar-panel-separator>
+    </template>
+    <ux-icon icon="add" click.delegate="addConditionToRule()"></ux-icon>
+  </div>
+  <atv-toolbar-panel-separator></atv-toolbar-panel-separator>
+  <p><strong t="three.Styles"></strong></p>
+  <p class="small muted" t="three.When the rule is applied, it will affet the objects according to the following styles"></p>
+  
+  <p t="three.Included Styles"></p>
+  <ux-list class="ux-list--border">
+    <ux-list-item reorderable-repeat.for="style of includedStylesInRule" reorderable-dnd-handler-selector=".ux-list-item__detail" reorderable-after-reordering="stylesOrderChanged" click.delegate="$parent.editStyle(style)">
+      <div class="ux-list-item__detail">
+        <ux-icon icon="drag_handle"></ux-icon>
+      </div>
+      <div class="ux-list-item__content">${style.name}</div>
+      <div class="ux-list-item__action-item">
+        <ux-icon icon="clear" click.delegate="removeStyle($index, $event)"></ux-icon>
+      </div>
+    </ux-list-item>
+  </ux-list>
+
+  <template if.bind="availableStylesForRule.length > 0">
+    <p t="three.Available Styles"></p>
+    <div class="atv-toolbar-panel-checkers-search-input">
+      <ux-icon icon="search"></ux-icon>
+      <input value.bind="searchStyle" placeholder="${'three.Search Style' | t}">
+      <ux-icon icon="clear" if.bind="searchStyle" click.delegate="searchStyle = ''"></ux-icon>
+    </div>
+    <ux-list class="ux-list--border" style="max-height: 200px;overflow-y:auto;">
+      <ux-list-item repeat.for="style of availableStylesForRule | filterStyle:searchStyle" click.delegate="$parent.editStyle(style)">
+        <div class="ux-list-item__detail">
+          <ux-icon icon="style"></ux-icon>
+        </div>
+        <div class="ux-list-item__content">${style.name}</div>
+        <div class="ux-list-item__action-item">
+          <ux-icon icon="add" click.delegate="addStyle(style, $event)"></ux-icon>
+        </div>
+      </ux-list-item>
+    </ux-list>
+  </template>
+
+
+  <ux-button type="text" click.delegate="createNewStyle()"><ux-icon icon="add"></ux-icon> <span t="three.Create New Style"></span></ux-button>
+  
+  <atv-toolbar-panel-separator></atv-toolbar-panel-separator>
+  <p><strong t="three.Settings"></strong></p>
+  <ux-input type="number" min="0" max="10" step="1" value.bind="rule.priority" change.delegate="notifyModification() & debounce:1000" label="${'three.Priority' | t}"></ux-input>
+  <ux-field>
+    <label>
+      <ux-checkbox checked.bind="rule.exclusive" change.delegate="notifyModification()"></ux-checkbox><span t="three.Exclusive"></span></label>
+  </ux-field>
+  <ux-field>
+    <label>
+      <ux-checkbox checked.bind="rule.last" change.delegate="notifyModification()"></ux-checkbox><span t="three.Last"></span></label>
+  </ux-field>
+  <ux-field>
+    <label>
+      <ux-checkbox checked.bind="rule.applyToChildren" change.delegate="notifyModification()"></ux-checkbox><span t="three.Apply to children"></span></label>
+  </ux-field>
+  <ux-field>
+    <label>
+      <ux-checkbox checked.bind="rule.active" change.delegate="notifyModification()"></ux-checkbox><span t="three.Active"></span></label>
+  </ux-field>
+
+  <ux-button type="text" style="--aurelia-ux--button-background: var(--aurelia-ux--design-error);" click.delegate="removeRule()"><span t="Remove"></span></ux-button>
+</template>

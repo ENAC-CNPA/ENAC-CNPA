@@ -1,0 +1,23 @@
+<template>
+  <require from="./viewer.css"></require>
+ 
+  <div class="three-viewer">
+    <three-cube-view three.bind="three" if.bind="three.camera"></three-cube-view>
+    <three class="three-viewer__element" view-model.ref="three"></three>
+    <div class="three-viewer__operation" if.bind="operation">${operation}</div>
+    <div class="three-viewer__toolbar" if.bind="!operation">
+      <div class="three-viewer__toolbar-item" click.delegate="toggleFilters()">
+        <ux-icon icon="filter_list"></ux-icon>
+      </div>
+    </div>
+    <ux-card class="three-viewer__filters" if.bind="filtersOpened">
+      <ux-card-header>
+        <div class="ux-card__title" t="three.Slice"></div>
+      </ux-card-header>
+      <div class="ux-card__separator" style="margin:0;"></div>
+      <div>
+      </div>
+    </ux-card>
+  </div>
+  
+</template>

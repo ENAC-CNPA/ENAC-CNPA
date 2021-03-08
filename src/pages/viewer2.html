@@ -1,0 +1,39 @@
+<template>
+  <require from="./viewer2.css"></require>
+  <div class="viewer-wrapper">
+    <three-cube-view three.bind="atv.three" if.bind="atv.three.camera"></three-cube-view>
+    <three></three>
+    <atv-operation-bar></atv-operation-bar>
+    <atv-toolbar>
+      <atv-toolbar-button icon="location_on" panel.bind="sitesPanel"></atv-toolbar-button>
+      <atv-toolbar-button icon="search" panel.bind="searchPanel" show.bind="atv.siteService.siteReady"></atv-toolbar-button>
+      <atv-toolbar-button icon="style" panel.bind="themesPanel" show.bind="atv.siteService.siteReady"></atv-toolbar-button>
+      <atv-toolbar-button icon="playlist_add_check" panel.bind="bcfPanel" show.bind="atv.siteService.siteReady"></atv-toolbar-button>
+      <atv-toolbar-button icon="folder_open" panel.bind="zonePanel" show.bind="atv.siteService.siteReady"></atv-toolbar-button>
+      <atv-toolbar-button icon="check" panel.bind="checkersPanel" show.bind="atv.siteService.siteReady && atv.global.state.swissdata.authenticated"></atv-toolbar-button>
+      <atv-toolbar-button icon="content_cut" click.trigger="atv.toggleSlicingTool()" opened.bind="atv.toolsService.currentToolName === 'slice'" active.bind="atv.slice.isSlicing" show.bind="atv.siteService.siteReady"></atv-toolbar-button>
+      <atv-toolbar-button icon="straighten" click.trigger="atv.toggleMeasuringTool()" opened.bind="atv.toolsService.currentToolName === 'measure'" active.bind="atv.measure.measures.length > 0" show.bind="atv.siteService.siteReady"></atv-toolbar-button>
+      <atv-toolbar-panel view-model.ref="searchPanel" active.bind="atv.siteService.q || atv.siteService.filters.length">
+        <atv-toolbar-panel-search q.bind="atv.siteService.q" filters.bind="atv.siteService.filters"></atv-toolbar-panel-search>
+      </atv-toolbar-panel>
+      <atv-toolbar-panel view-model.ref="sitesPanel">
+        <atv-toolbar-panel-site-selector></atv-toolbar-panel-site-selector>
+      </atv-toolbar-panel>
+      <atv-toolbar-panel view-model.ref="themesPanel">
+        <atv-toolbar-panel-theme-selector></atv-toolbar-panel-theme-selector>
+      </atv-toolbar-panel>
+      <atv-toolbar-panel view-model.ref="bcfPanel">
+        <atv-toolbar-panel-bcf-editor panel.bind="bcfPanel"></atv-toolbar-panel-bcf-editor>
+      </atv-toolbar-panel>
+      <atv-toolbar-panel view-model.ref="zonePanel">
+        <atv-toolbar-panel-zone-selector></atv-toolbar-panel-zone-selector>
+      </atv-toolbar-panel>
+      <atv-toolbar-panel view-model.ref="checkersPanel">
+        <atv-toolbar-panel-checkers></atv-toolbar-panel-checkers>
+      </atv-toolbar-panel>
+    </atv-toolbar>
+    <atv-information-panel></atv-information-panel>
+    <atv-tool-measure></atv-tool-measure>
+    <atv-tool-slice></atv-tool-slice>
+  </div>
+</template>

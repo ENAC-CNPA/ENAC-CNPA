@@ -1,0 +1,33 @@
+<template class="atv-toolbar-panel-search">
+  <require from="../atv-toolbar.css"></require>
+  <require from="./atv-toolbar-panel-search.css"></require>
+  <div class="atv-toolbar-panel-search-input">
+    <ux-icon icon="search"></ux-icon>
+    <input value.bind="q" placeholder="${'Search' | t}">
+    <ux-icon icon="clear" if.bind="q" click.delegate="q = ''"></ux-icon>
+  </div>
+  <atv-toolbar-panel-separator></atv-toolbar-panel-separator>
+  <div class="atv-toolbar-panel-search-filters">
+    <template repeat.for="filter of filters">
+      <div class="atv-toolbar-panel-search-filter">
+        <ux-input value.bind="filter.key" variant="outline" label="${'three.Key' | t}" dense.bind="true" change.delegate="applyFilters()">
+          <ux-icon icon="list" slot="leading-icon" style="z-index: 1" click.delegate="atv.siteService.keyHelperList(filter)"></ux-icon>
+        </ux-input>
+        <ux-chip-list ux-choice-container.bind="filter.operator" click.delegate="applyFilters()">
+          <ux-chip ux-choice="<" ignore-dico>&lt;</ux-chip>
+          <ux-chip ux-choice="*" ignore-dico>*</ux-chip>
+          <ux-chip ux-choice="=" ignore-dico>=</ux-chip>
+          <ux-chip ux-choice="!=" ignore-dico>!=</ux-chip>
+          <ux-chip ux-choice=">" ignore-dico>&gt;</ux-chip>
+        </ux-chip-list>
+        <ux-input value.bind="filter.value" variant="outline" label="${'three.Value' | t}" dense.bind="true" change.delegate="applyFilters()">
+          <ux-icon icon="list" slot="leading-icon" style="z-index: 1" click.delegate="atv.siteService.valueHelperList(filter.key, filter)"></ux-icon>
+        </ux-input>
+        <ux-button type="text" size="small" click.delegate="removeFilter($index)" style="transform: scale(0.8) translateX(-10px)">Remove filter</ux-button>
+      </div>
+      <atv-toolbar-panel-separator if.bind="!$last"></atv-toolbar-panel-separator>
+    </template>
+    <ux-button type="text" click.delegate="addFilter()">Add Filter</ux-button>
+    <ux-button type="text" click.delegate="clearFilters()">Clear Filters</ux-button>
+  </div>
+</template>

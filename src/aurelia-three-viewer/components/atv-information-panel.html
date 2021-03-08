@@ -1,0 +1,17 @@
+<template class="atv-information-panel ${atv.select.objects.length > 0 ? 'atv-information-panel--active':''}">
+  <require from="../atv.css"></require>
+  <require from="./atv-information-panel.css"></require>
+
+  <div class="atv-panel-head">
+    <ux-icon style="margin-left: auto;" icon="${explorerOpened ? 'keyboard_arrow_down':'keyboard_arrow_up'}" click.delegate="explorerOpened = !explorerOpened" class="click"></ux-icon>
+    <ux-select value.bind="atv.selectedObject" theme.bind="{background: 'white', borderColor: 'white', activeColor: '#eee', backgroundHover: '#eee'}">
+      <ux-option repeat.for="object of atv.select.objects" value.bind="object">${object.name || object.uuid}</ux-option>
+    </ux-select>
+    <ux-icon icon="clear" click.delegate="atv.select.none()" class="click"></ux-icon>
+  </div>
+  <template if.bind="explorerOpened">
+    <atv-panel-separator></atv-panel-separator>
+    <ux-button type="text" click.delegate="filterOutObject(atv.selectedObject)"><span t="three.Filter out this object"></span></ux-button>
+    <three-object-property-explorer object.bind="atv.selectedObject" properties.bind="propertiesExplorerCallback"></three-object-property-explorer>
+  </template>
+</template>

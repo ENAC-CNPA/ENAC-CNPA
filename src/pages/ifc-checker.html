@@ -1,0 +1,42 @@
+<template>
+  <require from="./ifc-checker.css"></require>
+  
+  <div class="header">
+    
+    <h1>IFC Checker</h1>
+    <div class="ifc-checker-tool ifc-checker-tool--${step}">
+      <template if.bind="step === 'welcome'">
+        <p>Télecharger un fichier IFC pour contrôler s'il répond aux exigences genevoises d'une demande d'autorisation de construire BIM</p>
+        <ux-button click.delegate="selectIfcFile()">Charger un fichier IFC</ux-button>
+      </template>
+      <template if.bind="step === 'select-report'">
+        <p>Choisir votre type de contrôle</p>
+        <div class="ifc-checker-tool__field">
+          <ux-select value.bind="selectedReportId">
+            <ux-option repeat.for="report of reports" value.bind="report.id">${report.name}</ux-option>
+          </ux-select>
+          <ux-button click.delegate="selectReport()">Valider</ux-button>
+        </div>
+      </template>
+      <template if.bind="step === 'email'">
+        <p>Saisir votre email pour recevoir le rapport dès que le traitement sera terminé</p>
+        <div class="ifc-checker-tool__field">
+          <ux-input value.bind="email" label="Votre adresse email"></ux-input>
+          <ux-button click.delegate="startCheck()">GO</ux-button>
+        </div>
+      </template>
+      <template if.bind="step === 'upoading'">
+        <p>Votre fichier est en cours d'envoi. Merci de ne pas fermer votre navigateur tant que l'envoi n'est pas terminé.</p>
+        <ar-spinner-line active.bind="true"></ar-spinner-line>
+      </template>
+      <template if.bind="step === 'end'">
+        <p>
+          <span class="muted">Operation: ${operationId}</span>
+          <br />Votre fichier IFC a correctement été envoyé. Vous recevrez le rapport sur votre email <strong>${email}</strong> dès qu'il sera prêt. Vous pouvez dorénavent fermer cette page en toute sécurité.</p>
+        <ux-button click.delegate="step = 'welcome'">Recommencer</ux-button>
+      </template>
+    </div>
+
+  </div>
+
+</template>

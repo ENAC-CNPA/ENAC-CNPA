@@ -1,0 +1,33 @@
+.header {
+  background: #369;
+  color: white;
+  margin: 0;
+}
+.header h1 {
+  padding-top: 32px;
+  text-align: center;
+}
+
+.ifc-checker-tool {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  flex-direction: column;
+  text-align: center;
+}
+
+.ifc-checker-tool__field {
+  display: flex;
+  min-width: 500px;
+  align-items: center;
+}
+
+.ifc-checker-tool__field:first-child {
+  width: 100%;
+}
+
+.ifc-checker-tool__field ux-button {
+  flex-shrink: 0;
+  margin-left: 8px;
+}

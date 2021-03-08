@@ -1,0 +1,91 @@
+<template>
+  <require from="./account.css"></require>
+  <section>
+    <h1 style="text-align:center;" t="account.My Account"></h1>
+
+    <div class="account-cards">
+      <ux-card>
+        <ux-card-header color="primary" class="ux-card__title" t="account.My Profile"></ux-card-header>
+        <ux-card-content>
+          <ux-grid theme.bind="{outerPadding: '0'}">
+            <ux-grid-cell sm="8" class="left">
+              <h3 t="profile.Profile details"></h3>
+              <template if.bind="global.state.swissdata && global.state.swissdata.user">
+                ${global.state.swissdata.user.firstname} ${global.state.swissdata.user.lastname}
+              </template>
+              <template if.bind="global.state.profile">
+                <br>${global.state.profile.street}
+                <br>${global.state.profile.zip} ${global.state.profile.city}
+              </template>
+            </ux-grid-cell>
+            <ux-grid-cell sm="4" class="left" align-self-middle>
+              <ux-button click.delegate="global.navigateToRoute('profile')"><span t="profile.Edit My Profile"></span></ux-button>
+            </ux-grid-cell>
+            <ux-grid-cell sm="8" class="left">
+              <h3 t="Login credentials"></h3>
+              ${global.state.swissdata.user.email}
+              <br>${global.state.swissdata.user.mobile}
+            </ux-grid-cell>
+            <ux-grid-cell sm="4" class="left" align-self-middle>
+              <ux-button click.delegate="global.navigateToRoute('credentials')"><span t="profile.Edit Credentials"></span></ux-button>
+            </ux-grid-cell>
+            
+          </ux-grid>
+          
+          
+        </ux-card-content>
+        <ux-card-footer>
+          
+        </ux-card-footer>
+      </ux-card>
+
+      <div class="center">
+        <ux-button slot="main-buttons" type="text" click.delegate="global.logout()"><span t="Logout"></span></ux-button>
+      </div>
+
+      <p>&nbsp;</p>
+
+      <ux-card if.bind="global.hasAdminRole">
+        <ux-card-header color="primary" class="ux-card__title" t="account.Application"></ux-card-header>
+        <ux-card-content>
+          
+          <ux-list>
+            <!-- <ux-list-item class="click" click.delegate="global.navigateToRoute('admin', {siteId: site.id})">
+              <div class="ux-list-item__detail">
+                <ux-icon icon="settings"></ux-icon>
+              </div>
+              <div class="ux-list-item__content" t="Admin"></div>
+              <div class="ux-list-item__action-item">
+                <ux-icon icon="chevron_right"></ux-icon>
+              </div>
+            </ux-list-item> -->
+            <ux-list-item repeat.for="site of sites">
+              <div class="ux-list-item__detail">
+                <ux-icon icon="location_on"></ux-icon>
+              </div>
+              <div class="ux-list-item__content">
+                ${site.name}
+              </div>
+              <div class="ux-list-item__action-item">
+                <!-- <ux-icon class="click" icon="settings" click.delegate="global.navigateToRoute('admin', {siteId: site.id})"></ux-icon> -->
+                <ux-icon class="click" icon="remove_red_eye" click.delegate="global.navigateToRoute('viewer2', {siteId: site.id})"></ux-icon>
+              </div>
+            </ux-list-item>
+          </ux-list>
+          
+          
+        </ux-card-content>
+        <ux-card-footer>
+          
+        </ux-card-footer>
+      </ux-card>
+
+
+    </div>
+
+    
+
+
+  </section>
+
+</template>

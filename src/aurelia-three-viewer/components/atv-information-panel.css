@@ -1,0 +1,22 @@
+.atv-information-panel {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: none;
+
+}
+.atv-information-panel--active {
+  display: block;
+  color: #000;
+  min-width: 250px;
+  min-height: 40px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.atv-information-panel--active ux-list {
+  margin-left: 20px;
+  overflow:auto;
+  height: 300px;
+}

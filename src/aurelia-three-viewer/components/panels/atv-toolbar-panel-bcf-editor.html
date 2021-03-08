@@ -1,0 +1,102 @@
+<template class="atv-toolbar-panel-search">
+  <require from="../../atv.css"></require>
+  <require from="../atv-toolbar.css"></require>
+  <require from="./atv-toolbar-panel-checkers.css"></require>
+  <div class="atv-panel-head">
+
+    <template if.bind="bcfView === 'topics-list'">
+      <ux-icon icon="list"></ux-icon>
+      <span t="three.bcf.BCF Topics"></span>
+    </template>
+    <template if.bind="bcfView === 'new-topic'">
+      <ux-icon icon="add"></ux-icon>
+      <span t="bcf.Create a new topic"></span>
+    </template>
+    <template if.bind="bcfView === 'topic'">
+      <ux-icon icon="chevron_left" class="click" click.delegate="backToBcfList()"></ux-icon>
+      <span>${bcfTopic.title}</span>
+      <ux-icon icon="edit" class="click" click.delegate="startEditTopic()"></ux-icon>
+    </template>
+    <template if.bind="bcfView === 'edit-topic'">
+      <ux-icon icon="edit"></ux-icon>
+      <span>${bcfTopic.title}</span>
+    </template>
+
+  </div>
+  <atv-toolbar-panel-separator></atv-toolbar-panel-separator>
+  <div class="atv-panel-content">
+    <bcf-topics if.bind="bcfView === 'topics-list'"
+      topic.delegate="openTopic($event)"
+      project-id.bind="bcfProject.project_id"></bcf-topics>
+    <bcf-new-topic-form if.bind="bcfView === 'new-topic'" 
+      project-id.bind="bcfProject.project_id" 
+      topic-instance.bind="bcfNewTopicInstance" 
+      comment-instance.bind="bcfNewCommentInstance"
+      viewpoint-instance.bind="bcfViewpointInstance"
+      viewpoint.delegate="highlightViewpoint($event)"></bcf-new-topic-form>
+    <bcf-topic if.bind="bcfView === 'topic' && !bcfEditComment"
+      viewpoint.delegate="highlightViewpoint($event)"
+      edit-comment.delegate="editComment($event)"
+      hide-title.bind="true"
+      project-id.bind="bcfProject.project_id"
+      topic-id.bind="bcfTopic.guid"></bcf-topic>
+    <div if.bind="bcfView === 'topic' && (bcfAddComment || bcfEditComment)">
+      <bcf-comment-form project-id.bind="bcfProject.project_id" 
+        topic-id.bind="bcfTopic.guid" 
+        comment-id.bind="bcfNewCommentInstance.guid"
+        instance.bind="bcfNewCommentInstance"
+        viewpoint-instance.bind="bcfViewpointInstance"
+        viewpoint.delegate="highlightViewpoint($event)"
+        ></bcf-comment-form>
+      <!-- <ux-list>
+        <ux-list-item>
+          <div class="ux-list-item__detail ux-list-item__avatar">
+            <img style="width: 100px;" src.bind="bcfViewpointInstance.snapshot.snapshot_data" if.bind="bcfViewpointInstance.snapshot.snapshot_data">
+          </div>
+          <div class="ux-list-item__content" t="bcf.Include Viewpoint in Comment"></div>
+          <div class="ux-list-item__action-item"><ux-switch checked.bind="saveBcfViewpointWithComment"></ux-switch></div>
+        </ux-list-item>
+      </ux-list>
+      
+      <ux-list class="ux-list--border" if.bind="saveBcfViewpointWithComment && bcfViewpointInstance && bcfViewpointInstance.components">
+        <ux-list-item repeat.for="component of bcfViewpointInstance.components.selection">
+          <div class="ux-list-item__content">IFC: ${component.ifc_guid}</div>
+          <div class="ux-list-item__action-item"><ux-icon icon="clear" click.delegate="removeIfcFromViewpoint(component.ifc_guid)"></ux-icon></div>
+        </ux-list-item>
+      </ux-list>
+      
+      <p class="muted" 
+        style="margin: 16px;" 
+        if.bind="saveBcfViewpointWithComment && !bcfViewpointInstance.components.selection.length">
+        <span t="bcf.Add objects to your Viewpoint by selecting them in the viewer"></span>
+      </p> -->
+    </div>
+    <bcf-topic-form if.bind="bcfView === 'edit-topic'"
+      project-id.bind="bcfProject.project_id"
+      topic-id.bind="bcfTopic.guid"
+      instance.bind="bcfTopic"></bcf-topic-form>
+    
+    <atv-toolbar-panel-separator></atv-toolbar-panel-separator>
+
+    <template if.bind="bcfView === 'topics-list'">
+      <ux-button type="text" click.delegate="exportBcf()"><span t="bcf.Export BCF"></span></ux-button>
+      <ux-button type="raised" style="margin-left: auto" click.delegate="startNewBcfTopic()"><span t="bcf.New Topic"></span></ux-button>
+    </template>
+    <template if.bind="bcfView === 'new-topic'">
+      <ux-button type="text" click.delegate="cancelNewBcfTopic()"><span t="Cancel"></span></ux-button>
+      <ux-button type="raised" style="margin-left: auto" click.delegate="saveNewBcfTopic()"><span t="Save"></span></ux-button>
+    </template>
+    <template if.bind="bcfView === 'topic' && !(bcfAddComment || bcfEditComment)">
+      <!-- <ux-button type="text" click.delegate="startEditTopic()"><span t="bcf.Edit Topic"></span></ux-button> -->
+      <ux-button type="raised" style="margin-left: auto" click.delegate="addComment()"><span t="bcf.New Comment"></span></ux-button>
+    </template>
+    <template if.bind="bcfView === 'topic' && (bcfAddComment || bcfEditComment)">
+      <ux-button type="text" click.delegate="cancelNewBcfComment()"><span t="Cancel"></span></ux-button>
+      <ux-button type="raised" style="margin-left: auto" click.delegate="saveNewBcfComment()"><span t="Save"></span></ux-button>
+    </template>
+    <template if.bind="bcfView === 'edit-topic'">
+      <ux-button type="text" click.delegate="cancelEditTopic()"><span t="Cancel"></span></ux-button>
+      <ux-button type="raised" style="margin-left: auto" click.delegate="saveEditedTopic()"><span t="Save"></span></ux-button>
+    </template>
+  </div>
+</template>

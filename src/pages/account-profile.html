@@ -1,0 +1,39 @@
+<template>
+  <require from="./account.css"></require>
+  <section class="maxtext center">
+    <h1 t="profile.My Profile"></h1>
+
+    <div class="account-cards">
+      <ux-card>
+        
+        <ux-card-content>
+
+          <ux-form>
+            <deco-field if.bind="editingUserInstance" instance.bind="editingUserInstance" property="firstname"></deco-field>
+            <deco-field if.bind="editingUserInstance" instance.bind="editingUserInstance" property="lastname"></deco-field>
+
+            <deco-field if.bind="editingProfileInstance" instance.bind="editingProfileInstance" property="street"></deco-field>
+            <deco-field if.bind="editingProfileInstance" instance.bind="editingProfileInstance" property="zip"></deco-field>
+            <deco-field if.bind="editingProfileInstance" instance.bind="editingProfileInstance" property="city"></deco-field>
+
+            <ux-field>
+              <label t="Country"></label>
+              <ar-select value.bind="editingProfileInstance.country">
+                <ar-option repeat.for="country of countries" label.bind="country.name" value.bind="country.countryCode"></ar-option>
+              </ar-select>
+            </ux-field>
+            
+            <deco-field if.bind="editingProfileInstance" instance.bind="editingProfileInstance" property="picture"></deco-field>
+
+
+            <ux-button click.delegate="updateProfile()"><span t="Update"></span></ux-button>
+          </ux-form>
+        </ux-card-content>
+      </ux-card>
+    </div>
+
+    <div class="center">
+      <ux-button slot="main-buttons" type="text" click.delegate="global.navigateToRoute('account')"><span t="profile.Back to My Account"></span></ux-button>
+    </div>
+  </section>
+</template>

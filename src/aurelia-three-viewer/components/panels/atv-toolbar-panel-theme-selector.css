@@ -1,0 +1,13 @@
+.atv-toolbar-panel-theme-selector-search-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  padding: 0 8px;
+}
+.atv-toolbar-panel-theme-selector-search-input > input{
+  width: 100%;
+  padding: 5px;
+  border: none;
+  outline: none;
+}

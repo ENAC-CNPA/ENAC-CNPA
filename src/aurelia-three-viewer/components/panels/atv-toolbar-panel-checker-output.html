@@ -1,0 +1,7 @@
+<template bindable="output" class="checker-output checker-output--${output.display}  checker-output--${output.style}">
+  <require from="./atv-toolbar-panel-checker-output.css"></require>
+  <div class="checker-output--prefix">${output.prefix}</div>
+  <div class="checker-output--value">${output.value}</div>
+  <div class="checker-output--suffix">${output.suffix}</div>
+  <div class="checker-output--ref" click.delegate="highlightRef()" if.bind="nbRef">${nbRef} ref</div>
+</template>

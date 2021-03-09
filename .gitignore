@@ -33,7 +33,7 @@ node_modules
 /config/environment.json
 /config/environment.production.json
 /config/environment.staging.json
-
+docker-build.sh
 
 # Compiled files
 /scripts

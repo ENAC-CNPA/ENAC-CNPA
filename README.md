@@ -1,8 +1,16 @@
 # `BIMetat-app`
 
 This project is bootstrapped by [aurelia-cli](https://github.com/aurelia/cli).
-
 For more information, go to https://aurelia.io/docs/cli/webpack
+
+<br>
+
+## Start to customize files:
+- environment.json.sample : environment.json
+- environment.production.json.sample : environment.production.json
+- environment.staging.json.sample : environment.staging.json
+
+<br>
 
 ## Run dev app
 

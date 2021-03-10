@@ -13,7 +13,7 @@ export let routes: Array<RouteConfig> = [
   { route: 'checker',       name: 'ifc-checker',       moduleId: PLATFORM.moduleName('pages/ifc-checker') },
   { route: 'slice',       name: 'slice',       moduleId: PLATFORM.moduleName('pages/slice') },
   { route: 'admin',       name: 'admin',       moduleId: PLATFORM.moduleName('pages/admin'), settings: {auth: true} },
-  { route: 'dico2',       name: 'dico2',       moduleId: PLATFORM.moduleName('aurelia-swissdata/components/dico2/dico', 'dico'), settings: { auth: true } }
+  { route: 'dico2',       name: 'dico2',       moduleId: PLATFORM.moduleName('aurelia-deco/components/dico2/dico', 'dico'), settings: { auth: true } }
 ];
 
 export default routes;

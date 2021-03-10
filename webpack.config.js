@@ -1,6 +1,6 @@
 const settings = require('./src/settings').default;
 const path = require('path');
-const plugins = ['aurelia-swissdata', 'aurelia-deco', 'aurelia-resources', 'aurelia-three', 'aurelia-bcf'];
+const plugins = ['aurelia-deco', 'aurelia-resources', 'aurelia-three', 'aurelia-bcf'];
 const useSrcFor = [];
 const pluginSrcConfig = plugins.reduce((map, packageName) => {
   map[packageName] = useSrcFor.indexOf(packageName) === -1 ? require(`./node_modules/${packageName}/webpack.dev`).default : require(`../${packageName}/webpack.dev`).default;
@@ -11,7 +11,7 @@ const aliases = ['aurelia-binding','aurelia-dialog','aurelia-framework','aurelia
 .concat(['@aurelia-ux','whatwg-fetch','aurelia-dependency-injection','aurelia-event-aggregator'])
 .concat(['aurelia-loader','aurelia-logging','aurelia-metadata','aurelia-pal','aurelia-path'])
 .concat(['aurelia-task-queue','aurelia-validation','awesome-phonenumber','aurelia-i18n', 'safe-buffer'])
-.concat(['aurelia-resources','aurelia-deco','aurelia-swissdata', 'aurelia-three', 'aurelia-bcf'])
+.concat(['aurelia-resources','aurelia-deco', 'aurelia-three', 'aurelia-bcf'])
 .concat(...(plugins.map(packageName => pluginSrcConfig[packageName].aliases)));
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');

@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-framework';
 import { Global } from 'global';
 import { getLogger, Logger } from 'aurelia-logging';
-import { UserModel, errorHandler, ProfileModel, ProfileHelper } from 'aurelia-swissdata';
+import { UserModel, errorHandler, ProfileModel, ProfileHelper } from 'aurelia-deco';
 import { countries } from 'aurelia-resources';
 
 @inject(Global)

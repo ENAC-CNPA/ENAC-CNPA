@@ -4,7 +4,7 @@ import { Router, RouterConfiguration } from 'aurelia-router';
 import { ArDrawer, addNotifyContainerAlias, setNotifyDefaults } from 'aurelia-resources';
 import routes from './routes';
 import settings from './settings';
-import { AuthorizeStep } from 'aurelia-swissdata';
+import { AuthorizeStep } from 'aurelia-deco';
 import { BaseApp } from 'base/base-app';
 import * as FastClick from 'fastclick';
 

@@ -32,7 +32,7 @@ let replaceSettings: StringTMap<Array<ReplaceOccurence>> = {
 key: `const path = require('path');`, 
 value: "const settings = require('./src/settings').default;\n"+
 "const path = require('path');\n"+
-"const plugins = ['aurelia-swissdata', 'aurelia-deco', 'aurelia-resources'];\n"+
+"const plugins = ['aurelia-deco', 'aurelia-resources'];\n"+
 "const useSrcFor = [];\n"+
 "const pluginSrcConfig = plugins.reduce((map, packageName) => {\n"+
 "  map[packageName] = useSrcFor.indexOf(packageName) === -1 ? require(`./node_modules/${packageName}/webpack.dev`).default : require(`../${packageName}/webpack.dev`).default;\n"+

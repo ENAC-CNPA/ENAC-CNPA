@@ -1,4 +1,4 @@
-import { SwissdataState, AppState as SwissdataAppState, DynamicDataModel } from 'aurelia-swissdata';
+import { SwissdataState, AppState as SwissdataAppState, DynamicDataModel } from 'aurelia-deco';
 import * as environment from '../config/environment.json';
 import settings from 'settings';
 import { State as BcfState, initialState as bcfInitialState } from 'aurelia-bcf';

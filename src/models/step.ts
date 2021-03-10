@@ -1,6 +1,6 @@
 /*
 import { model, Model, type, validate, form, Deco } from 'aurelia-deco';
-import { UserModel } from 'aurelia-swissdata';
+import { UserModel } from 'aurelia-deco';
 import { StringTMap } from 'aurelia-resources';
 
 @model('/step')

@@ -1,4 +1,4 @@
-import { SwissdataGlobal } from 'aurelia-swissdata';
+import { SwissdataGlobal } from 'aurelia-deco';
 import { ThreeCustomElement, ThreeToolsService, ThreeSelectionTool, ThreeSliceTool, ThreeMeasureTool } from 'aurelia-three';
 import { inject, Container } from 'aurelia-framework';
 import { EventAggregator, Subscription } from 'aurelia-event-aggregator';

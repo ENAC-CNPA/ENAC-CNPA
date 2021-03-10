@@ -1,7 +1,7 @@
 import { inject, computedFrom } from 'aurelia-framework';
 import { AppState, initAppState, initialState } from 'state';
 import { setFullState, clearState } from 'base/base-actions';
-import { SwissdataGlobal, ProfileHelper } from 'aurelia-swissdata';
+import { SwissdataGlobal, ProfileHelper } from 'aurelia-deco';
 import { errorify } from 'aurelia-resources';
 import { Store } from 'aurelia-store';
 import settings from 'settings';

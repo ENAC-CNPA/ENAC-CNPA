@@ -1,7 +1,7 @@
 import { inject, bindable } from 'aurelia-framework'
 import { Global } from 'global';
 import { getLogger } from 'aurelia-logging';
-import { GettingStarted } from 'aurelia-swissdata';
+import { GettingStarted } from 'aurelia-deco';
 import { pluck } from 'rxjs/operators';
 const log = getLogger('login');
 

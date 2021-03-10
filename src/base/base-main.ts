@@ -3,7 +3,7 @@ import { PLATFORM } from 'aurelia-pal';
 import { initialState } from 'state';
 import { settings} from 'settings';
 import * as environment from '../../config/environment.json';
-import { i18nSetup } from 'aurelia-swissdata';
+import { i18nSetup } from 'aurelia-deco';
 import * as icons from '@aurelia-ux/icons/sets/full.json';
 
 Container.instance.registerInstance('sd-settings', settings);
@@ -57,7 +57,7 @@ export function registerCorePlugins(aurelia: Aurelia) {
     .plugin(PLATFORM.moduleName('aurelia-ui-virtualization'))
     .plugin(PLATFORM.moduleName('aurelia-resources'), {stripe: {apiKey: environment.stripe.apiKey}})
     .plugin(PLATFORM.moduleName('aurelia-deco'), {ipStack: {apiKey: environment.ipstack.apiKey}})
-    .plugin(PLATFORM.moduleName('aurelia-swissdata'), {
+    .plugin(PLATFORM.moduleName('aurelia-deco'), {
       api: {
         host: environment.swissdata.host,
         publicKey: environment.swissdata.apiKey

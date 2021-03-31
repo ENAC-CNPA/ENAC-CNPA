@@ -42,3 +42,6 @@ docker-build.sh
 /dist
 /test/coverage-jest
 /test/coverage-karma
+
+# Documentation
+docs

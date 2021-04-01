@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "outDir": "./dist",
     "module": "esnext",
     "skipLibCheck": true,
     "typeRoots": [

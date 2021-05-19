@@ -22,11 +22,11 @@
     "dico:send": "ts-node --project dico-tool/tsconfig.json dico-tool/send.ts"
   },
   "dependencies": {
-    "@aurelia-ux/components": "^0.23.0",
-    "@aurelia-ux/core": "^0.23.0",
-    "@aurelia-ux/icons": "^0.23.0",
-    "@aurelia-ux/lookup": "^0.23.0",
-    "@aurelia-ux/positioning": "^0.23.0",
+    "@aurelia-ux/components": "^0.25.0",
+    "@aurelia-ux/core": "^0.25.0",
+    "@aurelia-ux/icons": "^0.25.0",
+    "@aurelia-ux/lookup": "^0.25.0",
+    "@aurelia-ux/positioning": "^0.25.0",
     "@types/file-saver": "^2.0.1",
     "@types/i18next-xhr-backend": "^1.4.2",
     "@types/numeral": "0.0.28",

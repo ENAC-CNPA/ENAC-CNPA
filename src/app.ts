@@ -7,8 +7,10 @@ import settings from './settings';
 import { AuthorizeStep } from 'aurelia-deco';
 import { BaseApp } from 'base/base-app';
 import * as FastClick from 'fastclick';
+import { StyleEngine } from '@aurelia-ux/core';
+import { UxInputTheme } from '@aurelia-ux/input';
 
-@inject(Global, Router)
+@inject(Global, Router, StyleEngine)
 export class App extends BaseApp {
 
   menuDrawer: ArDrawer;
@@ -18,7 +20,7 @@ export class App extends BaseApp {
 
   private handleResize: EventListener;
 
-  constructor(private global: Global, private router: Router) {
+  constructor(private global: Global, private router: Router, private styleEngine: StyleEngine) {
     super();
     this.handleResize = e => {
     };
@@ -27,6 +29,11 @@ export class App extends BaseApp {
     setNotifyDefaults({
       containerSelector: '.notify-top-host'
     });
+    const inputTheme: UxInputTheme = {
+      themeKey: "input",
+      borderRadius: '0px'
+    };
+    this.styleEngine.applyTheme(inputTheme, document.body);
   }
 
   public attached() {

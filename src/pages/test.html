@@ -1,0 +1,209 @@
+<template>
+  <require from="./test.css"></require>
+  <section>
+    <h1>Coordonnées de contact</h1>
+
+    <div>
+
+      <div class="center">
+        <h4>AC-Demat Design</h4>
+        <p class="field-row">
+          <label>E-mail</label>
+          <ux-input variant="outline"></ux-input>
+        </p>
+        <p class="field-row">
+          <label>E-mail</label>
+          <ux-input variant="outline" value.bind="'johndoe@gmail.com'" readonly></ux-input>
+        </p>
+        <p class="field-row" disabled>
+          <label>E-mail</label>
+          <ux-input variant="outline" disabled></ux-input>
+        </p>
+      </div>
+
+      <div style="max-width: 300px;margin:auto;">
+        
+        <h4 class="center">Material Design</h4>
+        <div>
+          <p>
+            <ux-input label="Addresse E-mail *"></ux-input>
+          </p>
+          <p>
+            <ux-input label="Name *" value.bind="name"></ux-input>
+          </p>
+          <p>
+            <ux-input label="Title *" value.bind="title"></ux-input>
+          </p>
+
+          <p>
+            <ux-select>
+              <ux-option value="1">Option 1</ux-option>
+              <ux-option value="2">Option 2</ux-option>
+              <ux-option value="3">Option 3</ux-option>
+              <ux-option value="4">Option 4</ux-option>
+            </ux-select>
+          </p>
+        
+        </div>
+  
+      </div>
+    </div>
+
+  </section>
+
+  <section>
+    <ux-list style="max-width: 300px;margin:auto;" class="user-preview">
+      <ux-list-item>
+        <div class="ux-list-item__detail">
+          <ux-icon icon="person" class="user-icon"></ux-icon>
+        </div>
+        <div class="ux-list-item__content">
+          Ophélie Vincendon
+          <div class="ux-list-item__secondary-content">
+            BIM Administrateur
+          </div>
+        </div>
+        <div class="ux-list-item__action-item">
+          <ux-icon icon="keyboard_arrow_down"></ux-icon>
+        </div>
+      </ux-list-item>
+    </ux-list>
+
+
+
+    <user-preview name="${name || 'Ophélie Vincendon'}" title="${title || 'BIM Administrateur'}"></user-preview>
+    <bim-button>
+
+    </bim-button>
+  
+  
+  </section>
+  
+  <section>
+    <ux-list style="max-width: 300px;margin:auto;">
+      <ux-list-item>
+        <div class="ux-list-item__detail">
+          <ux-icon icon="person"></ux-icon>
+        </div>
+        <div class="ux-list-item__content">
+          Option 1
+          <div class="ux-list-item__secondary-content">
+            BIM Administrateur
+          </div>
+        </div>
+        <div class="ux-list-item__action-item">
+          <ux-switch></ux-switch>
+        </div>
+      </ux-list-item>
+      <ux-list-item>
+        <div class="ux-list-item__detail">
+          <ux-icon icon="person"></ux-icon>
+        </div>
+        <div class="ux-list-item__content">
+          Option 2
+          <div class="ux-list-item__secondary-content">
+            BIM Administrateur
+          </div>
+        </div>
+        <div class="ux-list-item__action-item">
+          <ux-switch></ux-switch>
+        </div>
+      </ux-list-item>
+      <ux-list-item>
+        <div class="ux-list-item__detail">
+          <ux-icon icon="person"></ux-icon>
+        </div>
+        <div class="ux-list-item__content">
+          Option 3
+          <div class="ux-list-item__secondary-content">
+            BIM Administrateur
+          </div>
+        </div>
+        <div class="ux-list-item__action-item">
+          <ux-switch></ux-switch>
+        </div>
+      </ux-list-item>
+    </ux-list>
+  </section>
+
+  <section>
+    <ux-list style="max-width: 300px;margin:auto;">
+      <ux-list-item>
+        <div class="ux-list-item__detail">
+          <ux-icon icon="person"></ux-icon>
+        </div>
+        <div class="ux-list-item__content">
+          Option 1
+          <div class="ux-list-item__secondary-content">
+            BIM Administrateur
+          </div>
+        </div>
+        <div class="ux-list-item__action-item">
+          <ux-checkbox></ux-checkbox>
+        </div>
+      </ux-list-item>
+      <ux-list-item>
+        <div class="ux-list-item__detail">
+          <ux-icon icon="person"></ux-icon>
+        </div>
+        <div class="ux-list-item__content">
+          Option 2
+          <div class="ux-list-item__secondary-content">
+            BIM Administrateur
+          </div>
+        </div>
+        <div class="ux-list-item__action-item">
+          <ux-checkbox></ux-checkbox>
+        </div>
+      </ux-list-item>
+      <ux-list-item>
+        <div class="ux-list-item__detail">
+          <ux-icon icon="person"></ux-icon>
+        </div>
+        <div class="ux-list-item__content">
+          Option 3
+          <div class="ux-list-item__secondary-content">
+            BIM Administrateur
+          </div>
+        </div>
+        <div class="ux-list-item__action-item">
+          <ux-checkbox></ux-checkbox>
+        </div>
+      </ux-list-item>
+    </ux-list>
+  </section>
+
+  <section>
+
+    <h2>3 états de boutons sont possibles :</h2>
+
+    <div class="center">
+      <p class="button-group">
+        <ux-button slot="main-buttons" type="flat" click.delegate="global.logout()">Bouton principal</ux-button>
+        <ux-button slot="main-buttons" type="flat" click.delegate="global.logout()" class="fake-over">Survolé</ux-button>
+        <ux-button slot="main-buttons" type="flat" disabled>Disabled</ux-button>
+        <ux-button slot="main-buttons" type="flat" click.delegate="global.logout()">
+          <ux-icon icon="save"></ux-icon>
+          <span>Bouton avec icône</span>
+        </ux-button>
+        <ux-button slot="main-buttons" type="flat" click.delegate="global.logout()" class="fake-over">
+          <ux-icon icon="save"></ux-icon>
+          <span>Survolé</span>
+        </ux-button>
+        <ux-button slot="main-buttons" type="flat" disabled>
+          <ux-icon icon="save"></ux-icon>
+          <span>Disabled</span>
+        </ux-button>
+        <ux-button slot="main-buttons" type="outline" class="ux-button--accent" click.delegate="global.logout()">Bouton secondaire</ux-button>
+        <ux-button slot="main-buttons" type="outline" class="ux-button--accent fake-over" click.delegate="global.logout()">Survolé</ux-button>
+        <ux-button slot="main-buttons" type="outline" disabled>Disabled</ux-button>
+      </p>
+    </div>
+
+  </section>
+
+  <section>
+
+  </section>
+
+</template>

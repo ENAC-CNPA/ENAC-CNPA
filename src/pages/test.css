@@ -1,0 +1,73 @@
+/* Styles for page Account */
+
+.button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: center;
+  gap: 16px;
+}
+.field-row[disabled] {
+  color: var(--ux-swatch--grey-p600);
+}
+
+/* INPUT */
+ux-input.ux-input-component--outline[readonly],
+ux-input.ux-input-component--outline[disabled] {
+  background-color: var(--ux-swatch--grey-p300)!important;
+}
+ux-input.ux-input-component--outline[readonly] .ux-input-component__inner-input,
+ux-input.ux-input-component--outline[disabled] .ux-input-component__inner-input {
+  color: var(--ux-swatch--grey-p700);
+  -webkit-text-fill-color: var(--ux-swatch--grey-p700);
+}
+
+/* BUTTONS */
+ux-button button * + * {
+  margin-left: 8px;
+}
+ux-button:hover:not([disabled]) .ux-button--flat {
+  background: transparent;
+  border: 1px solid var(--aurelia-ux--design-primary);
+  color: var(--aurelia-ux--design-primary);
+}
+ux-button.ux-button--accent:hover:not([disabled]) .ux-button--flat {
+  border: 1px solid var(--aurelia-ux--design-accent);
+  color: var(--aurelia-ux--design-accent);
+}
+ux-button.ux-button--accent:hover:not([disabled]) .ux-button--outline {
+  color: var(--aurelia-ux--design-primary);
+}
+ux-button[disabled] .ux-button--flat {
+  background: var(--aurelia-ux--design-primary);
+  color: var(--aurelia-ux--design-primary-foreground);
+}
+ux-button[disabled] {
+  opacity: 0.6;
+}
+
+
+
+
+
+
+
+
+/* Fake Hover */
+ux-button.fake-over:not([disabled]) .ux-button--flat {
+  background: transparent;
+  border: 1px solid var(--aurelia-ux--design-primary);
+  color: var(--aurelia-ux--design-primary);
+}
+ux-button.ux-button--accent.fake-over:not([disabled]) .ux-button--flat {
+  border: 1px solid var(--aurelia-ux--design-accent);
+  color: var(--aurelia-ux--design-accent);
+}
+ux-button.ux-button--accent.fake-over:not([disabled]) .ux-button--outline {
+  color: var(--aurelia-ux--design-primary);
+}

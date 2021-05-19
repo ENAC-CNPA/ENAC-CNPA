@@ -6,6 +6,7 @@ export let routes: Array<RouteConfig> = [
   { route: 'login',       name: 'login',       moduleId: PLATFORM.moduleName('pages/login-page', 'login'), settings: {auth: false} },
   { route: 'account',       name: 'account',       moduleId: PLATFORM.moduleName('pages/account', 'account'), settings: {auth: true} },
   { route: 'profile',       name: 'profile',       moduleId: PLATFORM.moduleName('pages/account-profile', 'account'), settings: {auth: true} },
+  { route: 'test',       name: 'test',       moduleId: PLATFORM.moduleName('pages/test', 'test'), settings: {auth: false} },
   { route: 'credentials',       name: 'credentials',       moduleId: PLATFORM.moduleName('pages/account-credentials', 'account'), settings: {auth: true} },
   { route: 'viewer1/:siteId',       name: 'viewer',       moduleId: PLATFORM.moduleName('pages/viewer') },
   { route: 'viewer',       name: 'viewer2',       moduleId: PLATFORM.moduleName('pages/viewer2') },

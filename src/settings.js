@@ -22,7 +22,7 @@ var settings = {
     design: {
       primary: '#337ab7',
       primaryForeground: '#fff',
-      accent:  '#ef3340',
+      accent:  '#333333',
       accentForeground: '#fff',
 
       primaryLight: '#6ca9ea',
@@ -30,10 +30,10 @@ var settings = {
       primaryDark: '#004e87',
       primaryDarkForeground: '#fff',
 
-      accentLight: '#ff6c6b',
+      accentLight: '#e1e1e1',
       accentLightForeground: '#000',
-      accentDark: '#b50019',
-      accentDarkForeground: '#fff',
+      accentDark: '#b2b2b2',
+      accentDarkForeground: '#333',
 
       appBackground: '#fff',
       appForeground: '#000',

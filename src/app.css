@@ -16,3 +16,9 @@ body, button, input, optgroup, select, textarea {
 getting-started .ux-button--raised,getting-started .ux-button--flat,getting-started .ux-button--fab {
     background-color: var(--aurelia-ux--design-primary-dark) !important;
 }
+
+/* Fix Style ux-button */
+.ux-button--accent > .ux-button--outline {
+  border-color: var(--aurelia-ux--design-accent);
+  color: var(--aurelia-ux--design-accent);
+}

@@ -4,7 +4,7 @@ Ce guide s'attends à ce que l'app client soit connectée à une API qui contien
 
 ```ts
 // article.model.ts
-import { model, Model, type, validate, io } from 'deco-api';
+import { model, Model, type, validate, io } from 'deco-api';
 
 @model('article')
 export class ArticleModel extends Model {
@@ -93,7 +93,7 @@ Avec le contrôlleur connecté à la route `/article`:
 app.use('/article', ArticleController);  
 ```
 
-## Utilisation des modèles DECO côté client
+## Utilisation des modèles DECO côté client
 
 Aurelia Deco fournit les mêmes décorateurs de type que Deco API. Une fois les modèles définis avec les mêmes décorateur, on peut interagir avec le modèle API de façon très simple.
 
@@ -101,7 +101,7 @@ Exemple de modèle côté client:
 
 ```ts
 // article.model.ts
-import { model, Model, type, validate, form } from 'aurelia-deco';
+import { model, Model, type, validate, form } from 'aurelia-deco';
 
 @model('/article')
 export class ArticleModel extends Model {
@@ -392,7 +392,7 @@ Cette méthode est utile si on veut implémenter une modale qui adapte sa positi
 * ajouter un listener des événements que l'on veut suivre
 * appeler `positioning.update()` lors des ces événements
 
-### Errorify et Notify
+### Errorify et Notify
 
 Vous aurez remarqué dans le code l'utilisation de méthodes qui viennt d'`aurelia-resources`:
 

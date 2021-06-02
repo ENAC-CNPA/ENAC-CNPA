@@ -1,0 +1,22 @@
+.ux-card.context-menu  {
+  
+}
+.context-menu .ux-card__header {
+  padding: 8px;
+}
+.ux-modal__content > .ux-card.context-menu > .ux-card__header h4 {
+  margin: 0;
+}
+.context-menu .ux-card__content {
+  padding: 0px;
+}
+.context-menu .ux-list {
+}
+.context-menu .ux-list-item {
+  padding: 8px;
+  font-size: 14px;
+  --icon-size: 18px;
+}
+.context-menu .ux-list-item__action--disabled {
+  color: var(--aurelia-ux--design-disabled-foreground);
+}

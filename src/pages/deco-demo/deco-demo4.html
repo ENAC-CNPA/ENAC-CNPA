@@ -1,0 +1,60 @@
+<template>
+  <require from="./deco-demo.css"></require>
+
+  <section class="deco-demo">
+    <a route-href="deco">Retour</a>
+    <h1>4. Boîtes de dialogues pré-configurées</h1>
+  </section>
+
+  <section class="deco-demo">
+    <h3>Confirm</h3>
+    <p>Etes-vous sûr ?</p>
+    <ux-button click.delegate="confirm()">Réponse</ux-button>
+    <p if.bind="confirmResponse !== undefined">
+      Vous
+      <span if.bind="confirmResponse === true">êtes sûr</span>
+      <span if.bind="confirmResponse === false">n'êtes pas sûr</span>
+    </p>
+  </section>
+
+  <section class="deco-demo">
+    <h3>Prompt Boolean</h3>
+    <p>Est-ce que Servette va gagner le prochain championnat de hockey sur glace ?</p>
+    <ux-button click.delegate="promptBoolean()">Réponse</ux-button>
+    <p if.bind="promptBooleanResponse !== undefined">
+      Vous avez répondu:
+      <span if.bind="promptBooleanResponse === true">oui</span>
+      <span if.bind="promptBooleanResponse === false">non</span>
+    </p>
+  </section>
+
+  <section class="deco-demo">
+    <h3>Prompt Date</h3>
+    <p>A quelle date pourra-t-on enlever les masques dans les magasins ?</p>
+    <ux-button click.delegate="promptDate()">Réponse</ux-button>
+    <p if.bind="promptDateResponse !== undefined">
+      Vous avez répondu:
+      ${promptDateResponse | date}
+    </p>
+  </section>
+
+  <section class="deco-demo">
+    <h3>Prompt Select</h3>
+    <div>Qui va gagner Roland Garros ?</div>
+    <ux-button click.delegate="promptSelect()">Réponse</ux-button>
+    <p if.bind="promptSelectResponse !== undefined">
+      Vous avez répondu:
+      ${promptSelectResponse}
+    </p>
+  </section>
+
+  <section class="deco-demo">
+    <h3>Prompt Text</h3>
+    <p>De quelle couleur est le cheval blanc de Napoléon ?</p>
+    <ux-button click.delegate="promptText()">Réponse</ux-button>
+    <p if.bind="promptTextResponse !== undefined">
+      Vous avez répondu:
+      ${promptTextResponse}
+    </p>
+  </section>
+</template>

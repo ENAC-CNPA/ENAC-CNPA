@@ -1,0 +1,32 @@
+<template>
+  <require from="./deco-demo.css"></require>
+
+  <section class="deco-demo">
+    <a route-href="deco">Retour</a>
+    <h1>2. Edition automatique</h1>
+  </section>
+  <section class="deco-demo">
+
+    <ux-button type="text" click.delegate="addArticle()">
+      <ux-icon icon="add"></ux-icon>
+      Ajouter un article
+    </ux-button>
+
+    <div class="deco-demo-card-collection">
+      <ux-card repeat.for="article of articles">
+        <ux-card-header>
+          <h3>${article.title}</h3>
+        </ux-card-header>
+        <!-- emplacement pour image -->
+        <ux-card-content>
+          ${article.text}
+        </ux-card-content>
+        <ux-card-separator no-margin></ux-card-separator>
+        <ux-card-footer>
+          <ux-button type="raised" click.delegate="editArticle(article)">Editer</ux-button>
+        </ux-card-footer>
+      </ux-card>
+    </div>
+  </section>
+
+</template>

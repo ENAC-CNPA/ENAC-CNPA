@@ -1,0 +1,49 @@
+<template>
+  <require from="./deco-demo.css"></require>
+
+  <section class="deco-demo">
+    <a route-href="deco">Retour</a>
+    <h1>5. Modal Service pour des menus contextuels</h1>
+  </section>
+  <section class="deco-demo">
+
+    <div class="button-row__two">
+      <ux-button type="text" click.delegate="openContextMenu($event)" style="margin-right: auto;">
+        Actions
+      </ux-button>
+      <ux-button type="text" click.delegate="openContextMenu($event)" style="margin-left: auto;">
+        Actions
+      </ux-button>
+    </div>
+
+
+    <div class="deco-demo-card-collection">
+      <ux-card repeat.for="article of articles">
+        <ux-card-header>
+          <h3>${article.title}</h3>
+        </ux-card-header>
+        <img as-element="ad-image" instance.bind="article" property="image" w.bind="600" h.bind="200">
+        <ux-card-content>
+          ${article.text}
+        </ux-card-content>
+        <ux-card-separator no-margin></ux-card-separator>
+        <ux-card-footer>
+          <ux-button class="ux-button--icon" type="text" click.delegate="openArticleContextMenu($event, article)">
+            <ux-icon icon="more_horiz"></ux-icon>
+          </ux-button>
+        </ux-card-footer>
+      </ux-card>
+    </div>
+
+    <div class="button-row__two">
+      <ux-button type="text" click.delegate="openContextMenu($event)" style="margin-right: auto;">
+        Actions
+      </ux-button>
+      <ux-button type="text" click.delegate="openContextMenu($event)" style="margin-left: auto;">
+        Actions
+      </ux-button>
+    </div>
+
+  </section>
+
+</template>

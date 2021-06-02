@@ -431,7 +431,7 @@ Ces message vont se poster dans des container. La convention est que le template
 Avec des CSS du style:
 
 ```css
-<!-- app.css -->
+/* app.css */
 body > .notify-top-host,
 body > .notify-bottom-host {
   position: absolute;

@@ -90,7 +90,7 @@ export class DecoDemo5 {
         event.target as HTMLElement, 
         {
           title: 'Actions',
-          actions: this.articleActions(article);
+          actions: this.articleActions(article)
         }
       );
       const result = await dialog.whenClosed();

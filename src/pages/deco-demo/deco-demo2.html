@@ -17,7 +17,7 @@
         <ux-card-header>
           <h3>${article.title}</h3>
         </ux-card-header>
-        <!-- emplacement pour image -->
+        <img as-element="ad-image" instance.bind="article" property="image" w.bind="600" h.bind="200">
         <ux-card-content>
           ${article.text}
         </ux-card-content>

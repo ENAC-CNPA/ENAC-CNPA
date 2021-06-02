@@ -472,3 +472,14 @@ export class App {
 ```
 
 With all this in place, `notify` and `errorify` will publish messages into the default container (`.notify-top-host` above) or using the CSS selector provided as `NotifyOptions.containerSelector`. The aliases allow a developer to target the host by the alias name instead of the CSS selector, which reduces coupling and makes it easier to remember.
+
+
+# Questions
+
+* Changer les message d'erreur
+* Validation personnalisée (autres règles)
+* Clé de traduction pour les messages d'erreur
+* Renderer class .has-error => pas conforme pour Aurelia UX
+* Découplage de aurelia-deco
+
+

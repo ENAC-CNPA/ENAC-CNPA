@@ -14,7 +14,13 @@ export let routes: Array<RouteConfig> = [
   { route: 'checker',       name: 'ifc-checker',       moduleId: PLATFORM.moduleName('pages/ifc-checker') },
   { route: 'slice',       name: 'slice',       moduleId: PLATFORM.moduleName('pages/slice') },
   { route: 'admin',       name: 'admin',       moduleId: PLATFORM.moduleName('pages/admin'), settings: {auth: true} },
-  { route: 'dico2',       name: 'dico2',       moduleId: PLATFORM.moduleName('aurelia-deco/components/dico2/dico', 'dico'), settings: { auth: true } }
+  { route: 'dico2',       name: 'dico2',       moduleId: PLATFORM.moduleName('aurelia-deco/components/dico2/dico', 'dico'), settings: { auth: true } },
+  { route: 'deco',       name: 'deco',       moduleId: PLATFORM.moduleName('pages/deco-demo/deco-demo.html') },
+  { route: 'deco1',       name: 'deco1',       moduleId: PLATFORM.moduleName('pages/deco-demo/deco-demo1') },
+  { route: 'deco2',       name: 'deco2',       moduleId: PLATFORM.moduleName('pages/deco-demo/deco-demo2') },
+  { route: 'deco3',       name: 'deco3',       moduleId: PLATFORM.moduleName('pages/deco-demo/deco-demo3') },
+  { route: 'deco4',       name: 'deco4',       moduleId: PLATFORM.moduleName('pages/deco-demo/deco-demo4') },
+  { route: 'deco5',       name: 'deco5',       moduleId: PLATFORM.moduleName('pages/deco-demo/deco-demo5') },
 ];
 
 export default routes;

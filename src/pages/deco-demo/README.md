@@ -476,10 +476,101 @@ With all this in place, `notify` and `errorify` will publish messages into the d
 
 # Questions
 
-* Changer les message d'erreur
-* Validation personnalisée (autres règles)
-* Clé de traduction pour les messages d'erreur
-* Renderer class .has-error => pas conforme pour Aurelia UX
+
+## Validation Renderer
+
+Problème mentionné: erreur dans le renderer `aurelia-deco/src/deco/components/form/aurelia-ux-form-renderer.ts` qui n'attribue pas les bonnes classes CSS.
+
+Solution: ce renderer est une ancienne version - plus utilisée. Le renderer chargé par défaut est celui qui vient d'`aurelia-resources` comme on peut le voir dans le fichier `aurelia-deco/src/deco/decorators/model.ts`. La version d'aurelia resources contient les bonnes classes.
+
+Action:
+- [x] retirer l'ancienne implémentation inutile d'`aurelia-deco`. (fait)
+
+## Clé de traduction pour les messages de validation
+
+Besoin: utiliser des clés (de traduction) pour les messages de validation (plutôt que d'avoir le message direct).
+
+Solution: Aurelia Validation fournit une solution utilisant la librairie de traduction par défaut (et déjà utilisée dans aurelia-deco). La documentation est ici: http://aurelia.io/docs/plugins/validation#integrating-with-aurelia-i18n
+
+Action: 
+
+- [x] implémenter la traduction des message d'erreurs
+- [ ] ajouter les clés de traduction dans le dico
+
+Pour info, voici les messages par défaut fournis dans Aurelia Validation:
+
+```ts
+default: "${$displayName} is invalid.",
+required: "${$displayName} is required.",
+matches: "${$displayName} is not correctly formatted.",
+email: "${$displayName} is not a valid email.",
+minLength: "${$displayName} must be at least ${$config.length} character${$config.length === 1 ? '' : 's'}.",
+maxLength: "${$displayName} cannot be longer than ${$config.length} character${$config.length === 1 ? '' : 's'}.",
+minItems: "${$displayName} must contain at least ${$config.count} item${$config.count === 1 ? '' : 's'}.",
+maxItems: "${$displayName} cannot contain more than ${$config.count} item${$config.count === 1 ? '' : 's'}.",
+min: "${$displayName} must be at least ${$config.constraint}.",
+max: "${$displayName} must be at most ${$config.constraint}.",
+range: "${$displayName} must be between or equal to ${$config.min} and ${$config.max}.",
+between: "${$displayName} must be between but not equal to ${$config.min} and ${$config.max}.",
+equals: "${$displayName} must be ${$config.expectedValue}.",
+```
+
+## Validation personnalisée (autres règles)
+
+Besoin: créer des règles de validation personnalisées ou personnaliser le message de validation "required"
+
+Solution proposée: créer un décorateur spécifique pour chaque besoin. Un exemple:
+
+```
+// custom-validation-decorator.ts
+import { validate } from 'aurelia-deco';
+
+export const requiredProject = <T>(target: T, key: keyof T, descriptor?: PropertyDescriptor): void | any => {
+  if (descriptor) descriptor.writable = true;
+  validate.addTargetValidation(target, 'requiredProject', key);
+  if (descriptor) return descriptor;
+}
+
+validate.ValidationRules.customRule(
+  `validate:requiredProject`,
+  (value: any, obj: any, options: any) => {
+    console.log('validation', value);
+    return value !== null
+      && value !== undefined
+      && value !== '';
+  },
+  `requiredProject`
+);
+```
+
+Et modification dans le modèle:
+
+```ts
+  @type.string
+  @validate.required
+  title: string = '';
+
+  // devient
+
+  @type.string
+  @requiredProject
+  title: string = '';
+```
+
+Ce qui aura pour effet de demander une autre clé de traduction pour la validation de type "required" du champs title. On peut bien entendu améliorer ce mécanisme en créant un décorateur qui accepte un paramètre de clé de traduction. Exemple d'utilisation finale:
+
+```ts
+  @type.string
+  @requiredWithCustomKey('requiredTitle')
+  title: string = '';
+
+  @type.string
+  @requiredWithCustomKey('requiredDescription')
+  description: string = '';
+```
+
+## A traiter plus tard
+
 * Découplage de aurelia-deco
 
 

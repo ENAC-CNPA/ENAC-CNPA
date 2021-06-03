@@ -1,2 +1,2 @@
-npm uninstall aurelia-three
-npm install aurelia-three
+npm uninstall aurelia-three aurelia-bcf
+npm install aurelia-three aurelia-bcf

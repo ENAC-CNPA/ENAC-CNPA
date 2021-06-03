@@ -31,7 +31,7 @@
     "@types/i18next-xhr-backend": "^1.4.2",
     "@types/numeral": "0.0.28",
     "aurelia-animator-css": "^1.0.4",
-    "aurelia-bcf": "^1.0.2",
+    "aurelia-bcf": "^1.0.3",
     "aurelia-bootstrapper": "^2.3.2",
     "aurelia-dialog": "^2.0.0",
     "aurelia-i18n": "^2.3.2",

@@ -31,7 +31,7 @@ export class ArticleModel extends Model {
   @type.file({mimetype: 'image/*'})
   @io.all
   @validate.required
-  image: Date;
+  image: any;
 
   @type.integer
   @io.all

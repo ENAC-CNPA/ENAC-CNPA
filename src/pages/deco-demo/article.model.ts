@@ -26,9 +26,8 @@ export class ArticleModel extends Model {
   date: Date;
 
   @type.file({mimetype: 'image/*'})
-  // TODO: fix validate.required when model already has a file
-  // @validate.required
-  image: Date;
+  @validate.required
+  image: any;
 
   @type.any
   priority: number = 0;

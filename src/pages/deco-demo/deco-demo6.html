@@ -1,0 +1,34 @@
+<template>
+  <require from="./deco-demo.css"></require>
+
+  <section class="deco-demo">
+
+    <a route-href="deco">Retour</a>
+    <h1>6. Validation</h1>
+
+    <ux-card style="margin: 32px;">
+      <ux-card-header>
+        <h3 style="margin: 0;">Créer un nouvel article</h3>
+      </ux-card-header>
+      <ux-card-separator no-margin></ux-card-separator>
+      <ux-card-content>
+
+        <deco-field instance.bind="newInstance" property="title"></deco-field>
+
+        <ux-field>
+          <ux-input value.bind="newInstance.title & validate:newInstance.validationController"></ux-input>
+          <ux-input-info></ux-input-info>
+        </ux-field>
+        
+        
+      </ux-card-content>
+      <ux-card-separator no-margin></ux-card-separator>
+      <ux-card-footer>
+        <ux-button type="text">Annuler</ux-button>
+        <ux-button type="raised">Enregistrer</ux-button>
+      </ux-card-footer>
+    </ux-card>
+
+  </section>
+
+</template>

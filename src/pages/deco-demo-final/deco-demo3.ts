@@ -10,8 +10,6 @@ export class DecoDemo3 {
   
   public articles: ArticleModel[] = [];
 
-  public getAllSuffix = '';
-
   public constructor(private modalService: UxModalService) {
 
   }
@@ -22,9 +20,8 @@ export class DecoDemo3 {
 
   public async getArticles(): Promise<void> {
     try {
-      this.articles = await ArticleModel.getAll(this.getAllSuffix);
+      this.articles = await ArticleModel.getAll();
     } catch (error) {
-      this.articles = [];
       errorify(error);
     }
   }
@@ -90,14 +87,6 @@ export class DecoDemo3 {
     } catch (error) {
       errorify(error);
     }
-  }
-
-  public seed() {
-    ArticleModel.api.get('/article/seed');
-  }
-
-  public seed2() {
-    ArticleModel.api.get('/article/seed2');
   }
 
 }

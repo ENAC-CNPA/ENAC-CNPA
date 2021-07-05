@@ -7,19 +7,10 @@
   </section>
   <section class="deco-demo">
 
-    <div class="button-row__two button-row__two--small-right">
-      <div>
-        <ux-input variant="outline" value.bind="getAllSuffix" label="Suffix getAll"></ux-input>
-      </div>
-      <ux-button click.delegate="getArticles()">
-        Query
-      </ux-button>
-    </div>
     <ux-button type="text" click.delegate="addArticle()">
       <ux-icon icon="add"></ux-icon>
       Ajouter un article
     </ux-button>
-
 
     <div class="deco-demo-card-collection">
       <ux-card repeat.for="article of articles">
@@ -28,19 +19,7 @@
         </ux-card-header>
         <img as-element="ad-image" instance.bind="article" property="image" w.bind="600" h.bind="200">
         <ux-card-content>
-          <ux-list class="muted">
-            <user-item if.bind="article._createdBy" user-id.bind="article._createdBy"></user-item>
-            <ux-list-item else>
-              <div class="ux-list-item__content">Article anonyme</div>
-            </ux-list-item>
-          </ux-list>
-          <p>${article.text}</p>
-          <p if.bind="article.tags.length">
-            <ux-chip-list>
-              <ux-chip repeat.for="tag of article.tags">${tag}</ux-chip>
-            </ux-chip-list>
-          </p>
-
+          ${article.text}
         </ux-card-content>
         <ux-card-separator no-margin></ux-card-separator>
         <ux-card-footer>
@@ -48,9 +27,6 @@
         </ux-card-footer>
       </ux-card>
     </div>
-
-    <ux-button type="text" click.delegate="seed()">Seed</ux-button>
-    <ux-button type="text" click.delegate="seed2()">Seed 2</ux-button>
   </section>
 
 </template>

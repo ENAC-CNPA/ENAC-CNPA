@@ -21,6 +21,7 @@ export let routes: Array<RouteConfig> = [
   { route: 'deco3',       name: 'deco3',       moduleId: PLATFORM.moduleName('pages/deco-demo/deco-demo3') },
   { route: 'deco4',       name: 'deco4',       moduleId: PLATFORM.moduleName('pages/deco-demo/deco-demo4') },
   { route: 'deco5',       name: 'deco5',       moduleId: PLATFORM.moduleName('pages/deco-demo/deco-demo5') },
+  { route: 'deco6',       name: 'deco6',       moduleId: PLATFORM.moduleName('pages/deco-demo/deco-demo6') },
 ];
 
 export default routes;

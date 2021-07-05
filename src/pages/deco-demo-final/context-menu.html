@@ -1,0 +1,30 @@
+<template>
+  <require from="./context-menu.css"></require>
+  <ux-card class="context-menu">
+    <ux-card-header if.bind="title">
+      <h4>${title}</h4>
+    </ux-card-header>
+    <ux-card-content>
+      <ux-list class="ux-list--border">
+        <template repeat.for="action of actions">
+        <ux-list-item if.bind="!action.disabled" class="click" ok-modal.bind="action.callback">
+          <div class="ux-list-item__detail" if.bind="action.icon">
+            <ux-icon icon.bind="action.icon"></ux-icon>
+          </div>
+          <div class="ux-list-item__content">
+            ${action.label}
+          </div>
+        </ux-list-item>
+        <ux-list-item if.bind="action.disabled" class="ux-list-item__action--disabled">
+          <div class="ux-list-item__detail" if.bind="action.icon">
+            <ux-icon icon.bind="action.icon"></ux-icon>
+          </div>
+          <div class="ux-list-item__content">
+            ${action.label}
+          </div>
+        </ux-list-item>
+      </template>
+      </ux-list>
+    </ux-card-content>
+  </ux-card>
+</template>

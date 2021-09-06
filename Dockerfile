@@ -27,6 +27,7 @@ COPY --from=build-stage /app/dist/ /usr/share/nginx/html
 
 # Copy the nginx configuration from BIMétat
 COPY ./nginx-default.conf /etc/nginx/conf.d/default.conf
+COPY ./docker-host.sh ./
 
 # Build & Run your container :
 # docker build --build-arg BUILDCMD=build:stage -t bimetat-app .

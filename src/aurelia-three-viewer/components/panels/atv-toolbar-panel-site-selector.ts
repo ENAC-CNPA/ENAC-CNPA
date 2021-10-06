@@ -1,10 +1,10 @@
 import { SiteService } from './../../services/site';
-import { inject, bindable, customElement, bindingMode } from 'aurelia-framework';
-import { notify, errorify, ConfirmDialog, PromptTextDialog } from 'aurelia-resources';
+import { inject, bindable, customElement, bindingMode } from 'aurelia-framework';
+import { notify, errorify, ConfirmDialog, PromptTextDialog } from 'aurelia-resources';
 import { AdminExportSettingsDialog, AdminImportSettingsDialog, ThreeSiteModel } from 'aurelia-three';
-import { AtvGlobal } from '../../global';
+import { AtvGlobal } from '../../global';
 import { Subscription } from 'aurelia-event-aggregator';
-import { UxModalService } from '@aurelia-ux/modal';
+import { UxModalService } from '@aurelia-ux/modal';
 
 @customElement('atv-toolbar-panel-site-selector')
 @inject(Element, AtvGlobal, UxModalService)
@@ -170,7 +170,7 @@ export class AtvToolbarPanelSiteSelector {
         await ThreeSiteModel.clearData(this.atv.siteService.site.id);
         await this.atv.siteService.site.remove();
         await this.atv.siteService.fetchSites();
-        notify(this.atv.global.i18n.tr('three.The site has been deleted'));
+        notify('three.The site has been deleted');
         this.backToSites();
       }
     } catch (error) {

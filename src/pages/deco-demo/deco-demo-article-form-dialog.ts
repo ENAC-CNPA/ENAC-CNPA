@@ -34,7 +34,7 @@ export class DecoDemoArticleFormDialog {
     try {
       const article = await this.save();
       result.output = article;
-      notify(`L'article a été enregistrée`)
+      notify(`Article has been saved`)
     } catch (error) {
       errorify(error);
       return false;

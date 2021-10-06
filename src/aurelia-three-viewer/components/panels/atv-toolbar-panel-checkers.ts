@@ -1,8 +1,8 @@
 import { AtvGlobal } from './../../global';
-import { inject, customElement, computedFrom } from 'aurelia-framework';
+import { inject, customElement, computedFrom } from 'aurelia-framework';
 import { ThreeCheckerReportModel, ThreeCheckerReportDialog, CheckerFlowModel, CheckerFlowDialog, ReportOutput, FlowOutput } from 'aurelia-three';
-import { errorify, notify } from 'aurelia-resources'
-import { UxModalService } from '@aurelia-ux/modal';
+import { errorify, notify } from 'aurelia-resources'
+import { UxModalService } from '@aurelia-ux/modal';
 import { Subscription } from 'aurelia-event-aggregator';
 
 @customElement('atv-toolbar-panel-checkers')
@@ -60,14 +60,14 @@ export class AtvToolbarPanelCheckers {
     }
   }
 
-  public selectReport(reportOrReportId: ThreeCheckerReportModel | string) {
+  public selectReport(reportOrReportId: ThreeCheckerReportModel | string) {
     if (!this.atv.global.state.swissdata.authenticated) {
       return;
     }
     this.reportDisplayRun = false;
     const report = reportOrReportId instanceof ThreeCheckerReportModel ? reportOrReportId : this.reports.find(r => r.id === reportOrReportId);
     if (!report) {
-      errorify(new Error('Cannot find report with id: ' + reportOrReportId));
+      errorify(new Error('Cannot find report with id: ' + reportOrReportId), {formatter: undefined});
     }
     this.selectedReport = report;
     this.setIncludedFlowsInSelectedReport();
@@ -89,14 +89,14 @@ export class AtvToolbarPanelCheckers {
   }
 
   public async createNewReport() {
-    try { 
+    try { 
       const dialog = await this.modalService.open({
         viewModel: ThreeCheckerReportDialog,
         model: {siteId: this.atv.siteService.site.id, three: this.atv.three, flows: this.flows},
       });
       const result = await dialog.whenClosed();
       if (!result.wasCancelled) {
-        notify('The new report has been created');
+        notify('three.The new report has been created');
         this.getReports();
       }
     } catch (error) {
@@ -105,7 +105,7 @@ export class AtvToolbarPanelCheckers {
   }
 
   public async editReport(report: ThreeCheckerReportModel) {
-    try { 
+    try { 
       const dialog = await this.modalService.open({
         viewModel: ThreeCheckerReportDialog,
         model: {report, three: this.atv.three, flows: this.flows},
@@ -114,10 +114,10 @@ export class AtvToolbarPanelCheckers {
       if (!result.wasCancelled) {
         await this.getReports();
         if (result.output === 'remove') {
-          notify('The report has been removed');
+          notify('three.The report has been removed');
           this.backToReports();
         } else {
-          notify('The report has been edited');
+          notify('three.The report has been edited');
         }
       }
     } catch (error) {
@@ -189,7 +189,7 @@ export class AtvToolbarPanelCheckers {
   }
 
   public async createNewFlow() {
-    try { 
+    try { 
       const dialog = await this.modalService.open({
         viewModel: CheckerFlowDialog,
         model: {siteId: this.atv.siteService.site.id, three: this.atv.three},
@@ -201,11 +201,11 @@ export class AtvToolbarPanelCheckers {
           this.selectedReport.flows.push(result.output.id);
           await this.selectedReport.updateProperties('', ['flows']);
           await this.getFlows();
-          notify('The new flow has been added to the report');
+          notify('three.The new flow has been added to the report');
           this.selectReport(this.selectedReport.id);
         } else {
           await this.getFlows();
-          notify('The new flow has been created');
+          notify('three.The new flow has been created');
         }
       }
     } catch (error) {
@@ -214,7 +214,7 @@ export class AtvToolbarPanelCheckers {
   }
 
   public async editFlow(flow: CheckerFlowModel) {
-    try { 
+    try { 
       const dialog = await this.modalService.open({
         viewModel: CheckerFlowDialog,
         model: {flow, three: this.atv.three},
@@ -223,11 +223,11 @@ export class AtvToolbarPanelCheckers {
       if (!result.wasCancelled) {
         await this.getFlows();
         if (result.output === 'remove') {
-          notify('The flow has been removed from all reports');
+          notify('three.The flow has been removed from all reports');
           await this.getReports();
           this.selectReport(this.selectedReport.id);
         } else {
-          notify('The flow has been edited');
+          notify('three.The flow has been edited');
         }
       }
     } catch (error) {

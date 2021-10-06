@@ -1,12 +1,12 @@
 import { ThreeThemeRuleCondition, ThreeThemeModelRule, ThreeThemeModel, ThreeStyleModel } from 'aurelia-three';
 import { inject, bindable, DOM, customElement, computedFrom, bindingMode } from 'aurelia-framework';
 import { ConfirmDialog, errorify, notify } from 'aurelia-resources';
-import { UxModalService } from '@aurelia-ux/modal';
-import { AtvGlobal } from '../../../global';
+import { UxModalService } from '@aurelia-ux/modal';
+import { AtvGlobal } from '../../../global';
 import { AtvStyleDialog } from 'aurelia-three-viewer/dialogs/atv-style-dialog';
 
 @customElement('atv-theme-rule-editor')
-@inject(Element, AtvGlobal,  UxModalService)
+@inject(Element, AtvGlobal,  UxModalService)
 export class AtvThemeRuleEditor {    
 
   @bindable({defaultBindingMode: bindingMode.twoWay}) private theme: ThreeThemeModel;
@@ -15,7 +15,7 @@ export class AtvThemeRuleEditor {
   public includedStylesInRule: ThreeStyleModel[] = [];
   public counter = 0;
   
-  constructor(private element: Element, private atv: AtvGlobal, private modalService: UxModalService) {
+  constructor(private element: Element, private atv: AtvGlobal, private modalService: UxModalService) {
 
   }
 
@@ -42,7 +42,7 @@ export class AtvThemeRuleEditor {
   }
 
   public removeConditionFromRule(index: number) {
-    if (!Array.isArray(this.rule.conditions)) {
+    if (!Array.isArray(this.rule.conditions)) {
       this.rule.conditions = [];
       return;
     }
@@ -109,7 +109,7 @@ export class AtvThemeRuleEditor {
   }
 
   public async createNewStyle() {
-    try { 
+    try { 
       const dialog = await this.modalService.open({
         viewModel: AtvStyleDialog,
         model: {
@@ -134,7 +134,7 @@ export class AtvThemeRuleEditor {
     const editedStyle = new ThreeStyleModel;
     editedStyle.id = style.id;
     await editedStyle.updateInstanceFromElement(style);
-    try { 
+    try { 
       const dialog = await this.modalService.open({
         viewModel: AtvStyleDialog,
         model: {style: editedStyle},
@@ -146,7 +146,7 @@ export class AtvThemeRuleEditor {
         this.setIncludedStylesInRule();
         this.counter++;
         // await style.updateInstanceFromElement(result.output);
-        notify('The style has been edited');
+        notify('three.The style has been edited');
         const customEvent = DOM.createCustomEvent('styles-changed', {bubbles: true});
         this.element.dispatchEvent(customEvent);
       } else if (!result.wasCancelled && result.output === 'remove') {
@@ -155,7 +155,7 @@ export class AtvThemeRuleEditor {
         await this.atv.siteService.loadThemes();
         await this.atv.siteService.loadStyles();
         this.counter++;
-        notify('The style has been removed');
+        notify('three.The style has been removed');
         let event = DOM.createCustomEvent('reselect-theme', {bubbles: true});
         this.element.dispatchEvent(event);
       }
